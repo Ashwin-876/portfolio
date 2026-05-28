@@ -1107,7 +1107,7 @@ export default function App() {
           <div 
             className="scroll-reveal border-t border-neutral-900/60 pt-20 pb-16 mt-16 relative z-10 w-full"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 sm:gap-5 lg:gap-6 w-full max-w-full px-6 sm:px-12 md:px-24 relative z-10 justify-items-stretch">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-y-12 gap-x-[clamp(1.5rem,3vw,4rem)] max-w-[1600px] mx-auto w-full px-6 sm:px-12 md:px-24 relative z-10 justify-items-stretch">
               {[
                 { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
                 { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
