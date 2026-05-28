@@ -1020,10 +1020,10 @@ export default function App() {
           </div>
 
           {/* Interactive Folder for Client Reviews */}
-          <div className="flex justify-center items-center pt-[350px] pb-[350px] h-[1200px]">
+          <div className="flex justify-center items-center pt-[220px] pb-[220px] h-[950px]">
             <Folder
               color="#FFC107"
-              size={1}
+              size={0.8}
               className="mt-10"
               items={[
                   {
