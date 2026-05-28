@@ -1103,11 +1103,14 @@ export default function App() {
             />
           </div>
 
-          {/* Animated Statistics Section - Minimalist Row */}
+          {/* Animated Statistics Section - Responsive Grid */}
           <div 
-            className="scroll-reveal border-t border-neutral-900/60 pt-20 pb-16 mt-16 relative z-10 w-full"
+            className="scroll-reveal border-y border-neutral-900/60 py-20 mt-16 relative z-10 w-full"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-y-12 gap-x-[clamp(1.5rem,3vw,4rem)] max-w-[1600px] mx-auto w-full px-6 sm:px-12 md:px-24 relative z-10 justify-items-stretch">
+            {/* Soft grid background */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+            
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto w-full px-6 sm:px-12 md:px-16 relative z-10">
               {[
                 { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
                 { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },

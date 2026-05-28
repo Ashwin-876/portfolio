@@ -53,21 +53,20 @@ export default function CountUpStat({ valueStr, label, desc, delay = 0 }) {
   return (
     <div 
       ref={triggerRef} 
-      className="flex flex-col gap-3.5 text-left group cursor-default w-full transition-all duration-300"
+      className="flex flex-col gap-3 text-center md:text-left group cursor-default p-5 sm:p-6 rounded-2xl bg-neutral-900/20 border border-white/5 backdrop-blur-sm hover:bg-neutral-900/40 hover:border-blue-500/30 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(59,130,246,0.08)] transition-all duration-500 w-full sm:w-[240px] md:w-[250px] min-w-[220px] max-w-[260px] min-h-[170px]"
     >
       <span 
         ref={numRef}
-        className={`font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-100 to-blue-500 group-hover:to-cyan-400 transition-all duration-500 select-none inline-block ${
-          isCompleted ? 'drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]' : ''
+        className={`text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-100 to-blue-500 group-hover:to-cyan-400 transition-all duration-500 select-none inline-block ${
+          isCompleted ? 'drop-shadow-[0_0_12px_rgba(59,130,246,0.35)]' : ''
         }`}
-        style={{ fontSize: 'clamp(3rem, 5vw, 5rem)' }}
       >
         {displayValue}
       </span>
-      <span className="font-mono font-bold tracking-[0.12em] text-blue-500 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-0.5 leading-normal" style={{ fontSize: 'clamp(1rem, 1.2vw, 1.4rem)' }}>
+      <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-blue-400 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-1 leading-normal">
         {label}
       </span>
-      <span className="text-neutral-400 font-light leading-relaxed mt-0.5 group-hover:text-neutral-300 transition-colors duration-300" style={{ fontSize: 'clamp(0.95rem, 1vw, 1.1rem)' }}>
+      <span className="text-[11px] sm:text-xs text-neutral-300 font-light leading-relaxed mt-0.5 group-hover:text-neutral-200 transition-colors duration-300">
         {desc}
       </span>
     </div>
