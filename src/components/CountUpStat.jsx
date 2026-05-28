@@ -53,7 +53,7 @@ export default function CountUpStat({ valueStr, label, desc, delay = 0 }) {
   return (
     <div 
       ref={triggerRef} 
-      className="flex flex-col gap-2 text-left group cursor-default w-full transition-all duration-300"
+      className="flex flex-col gap-2.5 text-left group cursor-default w-full transition-all duration-300"
     >
       <span 
         ref={numRef}
@@ -63,10 +63,10 @@ export default function CountUpStat({ valueStr, label, desc, delay = 0 }) {
       >
         {displayValue}
       </span>
-      <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-blue-500 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-1 leading-normal">
+      <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-[0.08em] text-blue-500 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-0.5 leading-normal">
         {label}
       </span>
-      <span className="text-[11px] sm:text-xs text-neutral-400 font-light leading-relaxed mt-0.5 group-hover:text-neutral-300 transition-colors duration-300">
+      <span className="text-[10.5px] sm:text-[11px] text-neutral-400 font-light leading-relaxed mt-0.5 group-hover:text-neutral-300 transition-colors duration-300">
         {desc}
       </span>
     </div>
