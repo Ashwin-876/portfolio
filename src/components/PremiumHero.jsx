@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import image1 from '../assets/image-1.png';
 
-const FRAME = 550; // Premium shrunken TrueFocus frame size for laptop screens
+const FRAME = 550; // TrueFocus frame size
 
 export default function PremiumHero() {
   const sectionRef        = useRef(null);
@@ -93,7 +93,7 @@ export default function PremiumHero() {
 
       // Polygon safely supports negative percentages when the cursor is near the edge of the screen.
       // toFixed(3) is CRITICAL to prevent Javascript from outputting scientific notation (e.g. 1.5e-7%) which breaks CSS parsing!
-      const clip = `polygon(${pLeft.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)} ${pBottom.toFixed(3)}%, ${pLeft.toFixed(3)}% ${pBottom.toFixed(3)}%)`;
+      const clip = `polygon(${pLeft.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)}% ${pBottom.toFixed(3)}%, ${pLeft.toFixed(3)}% ${pBottom.toFixed(3)}%)`;
       
       topImageRef.current.style.clipPath = clip;
       topImageRef.current.style.WebkitClipPath = clip;
@@ -112,7 +112,7 @@ export default function PremiumHero() {
     tl.fromTo(subheadingRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=0.75');
     tl.fromTo(buttonsRef.current,    { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=0.75');
     gsap.fromTo(imageContainerRef.current,
-      { y: 0 }, { y: -10, duration: 3.5, ease: 'power1.inOut', repeat: -1, yoyo: true }
+      { y: 0 }, { y: -14, duration: 3.5, ease: 'power1.inOut', repeat: -1, yoyo: true }
     );
   }, []);
 
@@ -135,7 +135,7 @@ export default function PremiumHero() {
     if (frameYTo.current) frameYTo.current(e.clientY - FRAME / 2);
 
     // Parallax on image container
-    const strength = 10;
+    const strength = 12;
     const xOff = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2) * strength;
     const yOff = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2) * strength;
     gsap.to(imageContainerRef.current, { x: xOff, y: yOff, duration: 0.7, ease: 'power2.out' });
@@ -175,8 +175,8 @@ export default function PremiumHero() {
 
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute w-[70vw] h-[70vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/12 mix-blend-multiply blur-[120px] animate-pulse-slow" />
-        <div className="absolute w-[45vw] h-[45vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/12 mix-blend-multiply blur-[100px] animate-pulse-slow" style={{ animationDelay: '3s' }} />
+        <div className="absolute w-[80vw] h-[80vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/15 mix-blend-multiply blur-[130px] animate-pulse-slow" />
+        <div className="absolute w-[50vw] h-[50vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/15 mix-blend-multiply blur-[110px] animate-pulse-slow" style={{ animationDelay: '3s' }} />
       </div>
 
       {/* ── Image layers ───────────────────────────────────────── */}
@@ -185,7 +185,7 @@ export default function PremiumHero() {
         className="absolute inset-0 w-full h-full pointer-events-none z-10"
         style={{ transform: 'translateY(6vh) scale(0.93)' }}
       >
-        <div className="absolute w-[60%] h-[75%] top-[12%] left-[20%] bg-black/4 rounded-[3.5rem] blur-[35px] z-0" />
+        <div className="absolute w-[70%] h-[80%] top-[10%] left-[15%] bg-black/5 rounded-[4rem] blur-[40px] z-0" />
 
         {/* BLURRED layer — always visible as the background */}
         <img
@@ -193,8 +193,8 @@ export default function PremiumHero() {
           alt="Ashwin S blurred"
           className="absolute inset-0 w-full h-full object-cover object-center z-10"
           style={{
-            filter: 'blur(20px) brightness(0.96)',
-            transform: 'scale(1.03)',
+            filter: 'blur(22px) brightness(0.96)',
+            transform: 'scale(1.05)',
           }}
         />
 
@@ -213,7 +213,7 @@ export default function PremiumHero() {
             src={image1}
             alt="Ashwin S"
             className="absolute inset-0 w-full h-full object-cover object-center"
-            style={{ transform: 'scale(1.03)' }}
+            style={{ transform: 'scale(1.05)' }}
           />
         </div>
       </div>
@@ -239,48 +239,48 @@ export default function PremiumHero() {
 
         {/* Inner crosshair */}
         <span style={{
-          position: 'absolute', top: '50%', left: 12, right: 12,
-          height: 1, background: 'rgba(59,130,246,0.2)', transform: 'translateY(-50%)',
+          position: 'absolute', top: '50%', left: 16, right: 16,
+          height: 1, background: 'rgba(59,130,246,0.25)', transform: 'translateY(-50%)',
         }} />
         <span style={{
-          position: 'absolute', left: '50%', top: 12, bottom: 12,
-          width: 1, background: 'rgba(59,130,246,0.2)', transform: 'translateX(-50%)',
+          position: 'absolute', left: '50%', top: 16, bottom: 16,
+          width: 1, background: 'rgba(59,130,246,0.25)', transform: 'translateX(-50%)',
         }} />
 
         {/* Center dot */}
         <span style={{
           position: 'absolute', top: '50%', left: '50%',
-          width: 4, height: 4, borderRadius: '50%',
+          width: 5, height: 5, borderRadius: '50%',
           background: '#3b82f6',
-          boxShadow: '0 0 8px rgba(59,130,246,1), 0 0 16px rgba(59,130,246,0.6)',
+          boxShadow: '0 0 10px rgba(59,130,246,1), 0 0 20px rgba(59,130,246,0.6)',
           transform: 'translate(-50%,-50%)',
         }} />
       </div>
 
       {/* ── Content overlay ─────────────────────────────────────── */}
       <div className="absolute bottom-16 md:bottom-24 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-3 pointer-events-none max-w-[90%] md:max-w-2xl">
-        <span ref={eyebrowRef} className="text-neutral-400 font-bold uppercase tracking-[0.25em] text-[9px] md:text-xs opacity-0">
+        <span ref={eyebrowRef} className="text-neutral-400 font-bold uppercase tracking-[0.25em] text-[10px] md:text-xs opacity-0">
           ASHWIN S PORTFOLIO
         </span>
 
-        <h1 ref={headingRef} className="text-black text-lg sm:text-2xl md:text-3xl lg:text-[2.2rem] font-light tracking-tight leading-[1.18] opacity-0">
+        <h1 ref={headingRef} className="text-black text-2xl sm:text-4xl md:text-5xl lg:text-[2.2rem] font-light tracking-tight leading-[1.15] opacity-0">
           Building modern digital experiences with{' '}
           <br className="hidden sm:inline" />
           <span className="font-normal border-b-2 border-blue-500/80 pr-1 select-all">{currentText}</span>
           <span className="animate-ping font-extralight text-blue-500 ml-1">|</span>
         </h1>
 
-        <p ref={subheadingRef} className="text-neutral-600 font-light text-[11px] sm:text-xs max-w-md mt-1 leading-relaxed opacity-0">
+        <p ref={subheadingRef} className="text-neutral-600 font-light text-xs sm:text-sm max-w-lg mt-2 leading-relaxed opacity-0">
           AI Engineer & Full Stack Developer passionate about creating immersive digital experiences, AI-powered applications, and premium futuristic interfaces.
         </p>
 
-        <div ref={buttonsRef} className="flex items-center gap-5 mt-4 opacity-0 pointer-events-auto">
-          <a href="#projects" className="bg-black hover:bg-neutral-800 text-white text-[9px] md:text-xs tracking-wider uppercase px-6 py-3 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)] cursor-pointer">
+        <div ref={buttonsRef} className="flex items-center gap-6 mt-5 opacity-0 pointer-events-auto">
+          <a href="#projects" className="bg-black hover:bg-neutral-800 text-white text-[10px] md:text-xs tracking-wider uppercase px-7 py-3.5 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] cursor-pointer">
             VIEW PROJECTS
           </a>
-          <a href="#contact" className="flex items-center gap-2 text-neutral-500 hover:text-black font-bold text-[9px] md:text-xs tracking-wider uppercase transition-colors group cursor-pointer">
+          <a href="#contact" className="flex items-center gap-2 text-neutral-500 hover:text-black font-bold text-[10px] md:text-xs tracking-wider uppercase transition-colors group cursor-pointer">
             CONTACT ME
-            <svg className="w-3 h-3 fill-none stroke-current stroke-2 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </a>
@@ -288,9 +288,9 @@ export default function PremiumHero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 pointer-events-none z-30 opacity-55 animate-bounce">
-        <span className="text-[8px] font-bold tracking-[0.2em] uppercase text-neutral-400">Scroll Down</span>
-        <svg className="w-3 h-3 text-neutral-400 stroke-2 stroke-current fill-none" viewBox="0 0 24 24">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none z-30 opacity-60 animate-bounce">
+        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-neutral-400">Scroll Down</span>
+        <svg className="w-3.5 h-3.5 text-neutral-400 stroke-2 stroke-current fill-none" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
       </div>

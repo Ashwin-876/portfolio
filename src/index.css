@@ -6,26 +6,6 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-html {
-  font-size: 12px;
-  scroll-behavior: smooth;
-}
-@media (max-width: 1536px) {
-  html {
-    font-size: 11px; /* Super compact luxury UI for standard laptops/MacBooks */
-  }
-}
-@media (max-width: 1280px) {
-  html {
-    font-size: 10.5px;
-  }
-}
-@media (max-width: 768px) {
-  html {
-    font-size: 14px; /* Balanced mobile readability */
-  }
-}
-
 :root {
   background-color: #fafafa;
   color: #000000;
@@ -36,8 +16,6 @@ body {
   overflow-x: hidden;
   background-color: #fafafa;
   font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom animations for premium high-tech visual aids */
@@ -87,14 +65,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #fafafa;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.25);
+  background: #e4e4e7;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.45);
+  background: #d4d4d8;
 }
 
 /* Animated futuristic grid background */

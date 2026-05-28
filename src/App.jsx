@@ -688,7 +688,7 @@ export default function App() {
 
 
       {/* 1. AI ENGINEER ABOUT ME SECTION */}
-      <section id="about" className="relative py-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-10 overflow-hidden">
+      <section id="about" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-14 overflow-hidden">
         
         {/* Background Ambient Effects */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
@@ -761,7 +761,7 @@ export default function App() {
       </section>
 
       {/* 2. EXPERIENCE SECTION */}
-      <section id="experience" className="relative py-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-10 overflow-hidden border-t border-neutral-100/50">
+      <section id="experience" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-14 overflow-hidden border-t border-neutral-100/50">
         
         {/* Section Header */}
         <div className="scroll-reveal flex flex-col items-center text-center gap-5 relative w-full mb-8">
@@ -1003,12 +1003,12 @@ export default function App() {
       </section>
 
       {/* 6. CLIENT REVIEWS SECTION: Silicon Valley Dark Showcase */}
-      <section id="testimonials" className="relative py-20 bg-black border-y border-neutral-900 z-10">
+      <section id="testimonials" className="relative py-32 bg-black border-y border-neutral-900 z-10">
         {/* Futuristic glowing backdrop gradients */}
         <div className="absolute top-1/4 left-1/10 w-[350px] h-[350px] bg-blue-500/10 rounded-full blur-[110px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/10 w-[300px] h-[300px] bg-cyan-500/8 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 md:px-20 flex flex-col gap-12 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 sm:px-12 md:px-20 flex flex-col gap-20 relative z-10">
           <div className="scroll-reveal flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="flex flex-col gap-3">
               <span className="text-blue-500 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">TRUSTED BY FOUNDERS GLOBALLY</span>
@@ -1020,11 +1020,11 @@ export default function App() {
           </div>
 
           {/* Interactive Folder for Client Reviews */}
-          <div className="flex justify-center items-center pt-[100px] pb-[100px] h-[720px]">
+          <div className="flex justify-center items-center pt-[350px] pb-[350px] h-[1200px]">
             <Folder
               color="#FFC107"
               size={1}
-              className="mt-6"
+              className="mt-10"
               items={[
                   {
                     name: "Daniel Carter",
@@ -1071,30 +1071,30 @@ export default function App() {
                 ].map((client, index) => (
                   <div 
                     key={index} 
-                    className="w-full h-full bg-[#0a0b0d]/70 backdrop-blur-xl hover:bg-[#0a0b0d] hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-all duration-500 p-5 md:p-6 flex flex-col justify-between gap-3 cursor-pointer"
+                    className="w-full h-full bg-[#0a0b0d]/70 backdrop-blur-xl hover:bg-[#0a0b0d] hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-all duration-500 p-8 flex flex-col justify-between gap-6 cursor-pointer"
                   >
-                    <div className="flex flex-col gap-2.5">
+                    <div className="flex flex-col gap-4">
                       {/* Rating 5-stars with soft cyan neon glow */}
-                      <div className="flex gap-0.5 text-cyan-400">
+                      <div className="flex gap-1 text-cyan-400">
                         {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-4 h-4 fill-current drop-shadow-[0_0_4px_rgba(34,211,238,0.4)]" viewBox="0 0 24 24">
+                          <svg key={i} className="w-4.5 h-4.5 fill-current drop-shadow-[0_0_4px_rgba(34,211,238,0.4)]" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                           </svg>
                         ))}
                       </div>
 
-                      <p className="text-neutral-200 font-light leading-relaxed italic" style={{ fontSize: 'clamp(0.95rem, 1vw, 1.1rem)' }}>
+                      <p className="text-neutral-300 font-light text-xs sm:text-sm leading-relaxed italic">
                         “{client.text}”
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2.5 border-t border-white/5 pt-3 mt-1">
-                      <div className={`w-8.5 h-8.5 rounded-full bg-gradient-to-tr ${client.color} flex items-center justify-center font-bold text-white text-xs shadow-[0_0_15px_rgba(59,130,246,0.15)]`}>
+                    <div className="flex items-center gap-3 border-t border-white/5 pt-4 mt-2">
+                      <div className={`w-10 h-10 rounded-full bg-gradient-to-tr ${client.color} flex items-center justify-center font-bold text-white text-sm shadow-[0_0_15px_rgba(59,130,246,0.15)]`}>
                         {client.initial}
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-semibold text-white leading-tight" style={{ fontSize: 'clamp(1rem, 1.2vw, 1.2rem)' }}>{client.name}</span>
-                        <span className="text-[9px] font-mono text-neutral-400 tracking-wider mt-0.5">{client.role}</span>
+                        <span className="text-xs font-semibold text-white">{client.name}</span>
+                        <span className="text-[10px] font-mono text-neutral-500 tracking-wider mt-0.5">{client.role}</span>
                       </div>
                     </div>
                   </div>
@@ -1103,14 +1103,12 @@ export default function App() {
             />
           </div>
 
-          {/* Animated Statistics Section - Responsive Grid */}
+          {/* Animated Statistics Section - Edge to Edge Horizontal Line */}
           <div 
-            className="scroll-reveal border-y border-neutral-900/60 py-20 mt-16 relative z-10 w-full"
+            className="scroll-reveal border-t border-neutral-900 pt-20 mt-12 relative z-10"
+            style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)' }}
           >
-            {/* Soft grid background */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-            
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto w-full px-6 sm:px-12 md:px-16 relative z-10">
+            <div className="flex flex-row items-start justify-between gap-12 overflow-x-auto hide-scrollbar px-6 sm:px-12 md:px-24">
               {[
                 { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
                 { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
@@ -1125,7 +1123,6 @@ export default function App() {
                   valueStr={stat.value} 
                   label={stat.label} 
                   desc={stat.desc} 
-                  delay={idx * 0.12}
                 />
               ))}
             </div>
