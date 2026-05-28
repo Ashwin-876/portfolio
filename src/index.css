@@ -16,6 +16,7 @@ body {
   overflow-x: hidden;
   background-color: #fafafa;
   font-family: var(--font-sans);
+  zoom: 0.75;
 }
 
 /* Custom animations for premium high-tech visual aids */
