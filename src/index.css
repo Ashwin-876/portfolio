@@ -87,14 +87,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #fafafa;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #e4e4e7;
+  background: rgba(156, 163, 175, 0.25);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4d4d8;
+  background: rgba(156, 163, 175, 0.45);
 }
 
 /* Animated futuristic grid background */
