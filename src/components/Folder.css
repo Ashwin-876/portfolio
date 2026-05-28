@@ -1,0 +1,107 @@
+.folder {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  perspective: 1500px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.folder__back {
+  position: absolute;
+  inset: 0;
+  background-color: var(--folder-back-color);
+  border-radius: 12px 12px 0 0;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  box-shadow: inset 0 -20px 40px rgba(0,0,0,0.5);
+}
+
+/* Add the folder tab */
+.folder__back::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 120px;
+  height: 25px;
+  background-color: var(--folder-back-color);
+  border-radius: 12px 12px 0 0;
+}
+
+.folder__front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 95%;
+  background-color: var(--folder-color);
+  border-radius: 0 12px 12px 12px;
+  transform-origin: bottom;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.1);
+}
+
+/* right side flap if needed */
+.folder__front.right {
+  width: 50%;
+  left: auto;
+  right: 0;
+  background-color: transparent;
+}
+
+.folder.open .folder__front {
+  transform: rotateX(-50deg);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.1);
+}
+
+.paper {
+  position: absolute;
+  bottom: 5%;
+  width: 90%;
+  height: 110%;
+  border-radius: 12px;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.folder.open .paper {
+  transform: translate(var(--magnet-x, 0), var(--magnet-y, 0));
+}
+
+
+
+/* Papers base stack styling */
+.paper-1 { background-color: var(--paper-1); }
+.paper-2 { background-color: var(--paper-2); }
+.paper-3 { background-color: var(--paper-3); }
+.paper-4 { background-color: var(--paper-4); }
+.paper-5 { background-color: var(--paper-5); }
+.paper-6 { background-color: var(--paper-6); }
+
+/* Fanning out into a 3x3 Grid Layout when folder is opened */
+.folder.open .paper-1 {
+  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+}
+.folder.open .paper-2 {
+  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+}
+.folder.open .paper-3 {
+  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+}
+.folder.open .paper-4 {
+  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+}
+.folder.open .paper-5 {
+  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+}
+.folder.open .paper-6 {
+  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+}
