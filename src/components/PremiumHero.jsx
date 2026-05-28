@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import image1 from '../assets/image-1.png';
 
-const FRAME = 380; // TrueFocus frame size scaled down for laptop screens
+const FRAME = 300; // Premium shrunken TrueFocus frame size for laptop screens
 
 export default function PremiumHero() {
   const sectionRef        = useRef(null);
@@ -167,7 +167,7 @@ export default function PremiumHero() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#fafafa] overflow-hidden flex items-center justify-center select-none"
+      className="relative w-full h-[86vh] min-h-[85vh] bg-[#fafafa] overflow-hidden flex items-center justify-center select-none"
       style={{ cursor: 'none' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -183,7 +183,7 @@ export default function PremiumHero() {
       <div
         ref={imageContainerRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-10"
-        style={{ transform: 'translateY(5vh) scale(0.82)' }}
+        style={{ transform: 'translateY(4vh) scale(0.72)' }}
       >
         <div className="absolute w-[60%] h-[75%] top-[12%] left-[20%] bg-black/4 rounded-[3.5rem] blur-[35px] z-0" />
 
@@ -258,12 +258,12 @@ export default function PremiumHero() {
       </div>
 
       {/* ── Content overlay ─────────────────────────────────────── */}
-      <div className="absolute bottom-10 md:bottom-16 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-2.5 pointer-events-none max-w-[90%] md:max-w-2xl">
+      <div className="absolute bottom-8 md:bottom-12 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-2 pointer-events-none max-w-[90%] md:max-w-2xl">
         <span ref={eyebrowRef} className="text-neutral-400 font-bold uppercase tracking-[0.25em] text-[9px] md:text-xs opacity-0">
           ASHWIN S PORTFOLIO
         </span>
 
-        <h1 ref={headingRef} className="text-black text-xl sm:text-3xl md:text-4xl lg:text-[1.95rem] font-light tracking-tight leading-[1.18] opacity-0">
+        <h1 ref={headingRef} className="text-black text-lg sm:text-2xl md:text-3xl lg:text-[1.8rem] font-light tracking-tight leading-[1.18] opacity-0">
           Building modern digital experiences with{' '}
           <br className="hidden sm:inline" />
           <span className="font-normal border-b-2 border-blue-500/80 pr-1 select-all">{currentText}</span>
