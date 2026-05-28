@@ -458,14 +458,14 @@ export default function App() {
     if (!sections) return;
 
     const pin = gsap.to(sections, {
-      x: () => -(sections.scrollWidth - window.innerWidth),
+      x: () => -(sections.scrollWidth - (window.innerWidth / 0.75)),
       ease: "none",
       scrollTrigger: {
         trigger: triggerRef.current,
         pin: true,
         scrub: 1,
         start: "top top",
-        end: () => `+=${sections.scrollWidth - window.innerWidth}`,
+        end: () => `+=${sections.scrollWidth - (window.innerWidth / 0.75)}`,
         invalidateOnRefresh: true,
       }
     });
