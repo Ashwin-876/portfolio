@@ -1110,7 +1110,7 @@ export default function App() {
             {/* Soft grid background */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
             
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 max-w-7xl mx-auto w-full px-6 sm:px-12 md:px-16 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 sm:gap-5 max-w-[1600px] mx-auto w-full px-6 sm:px-12 md:px-16 relative z-10 justify-items-stretch">
               {[
                 { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
                 { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },

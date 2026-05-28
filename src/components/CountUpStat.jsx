@@ -53,17 +53,17 @@ export default function CountUpStat({ valueStr, label, desc, delay = 0 }) {
   return (
     <div 
       ref={triggerRef} 
-      className="flex flex-col gap-3 text-center md:text-left group cursor-default p-5 sm:p-6 rounded-2xl bg-neutral-900/20 border border-white/5 backdrop-blur-sm hover:bg-neutral-900/40 hover:border-blue-500/30 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(59,130,246,0.08)] transition-all duration-500 w-full sm:w-[240px] md:w-[250px] min-w-[220px] max-w-[260px] min-h-[170px]"
+      className="flex flex-col gap-3 text-center md:text-left group cursor-default p-4 sm:p-5 rounded-2xl bg-neutral-900/20 border border-white/5 backdrop-blur-sm hover:bg-neutral-900/40 hover:border-blue-500/30 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(59,130,246,0.08)] transition-all duration-500 w-full min-h-[150px]"
     >
       <span 
         ref={numRef}
-        className={`text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-100 to-blue-500 group-hover:to-cyan-400 transition-all duration-500 select-none inline-block ${
+        className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-neutral-100 to-blue-500 group-hover:to-cyan-400 transition-all duration-500 select-none inline-block ${
           isCompleted ? 'drop-shadow-[0_0_12px_rgba(59,130,246,0.35)]' : ''
         }`}
       >
         {displayValue}
       </span>
-      <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-blue-400 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-1 leading-normal">
+      <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-[0.2em] text-blue-400 group-hover:text-cyan-400 transition-colors duration-300 uppercase mt-1 leading-normal">
         {label}
       </span>
       <span className="text-[11px] sm:text-xs text-neutral-300 font-light leading-relaxed mt-0.5 group-hover:text-neutral-200 transition-colors duration-300">
