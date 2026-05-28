@@ -102,7 +102,8 @@ const SplitLoadingScreen = ({ onComplete }) => {
     document.body.style.overflow = 'hidden';
 
     // Set initial GSAP centering to avoid conflict with Tailwind translate classes
-    gsap.set(characterRef.current, { xPercent: -50, yPercent: -50 });
+    // Optically centered: shifted left by 6.73% to align head center perfectly with split divider
+    gsap.set(characterRef.current, { xPercent: -56.73, yPercent: -50 });
 
     // Idle character animation
     gsap.to(characterRef.current, {
@@ -392,9 +393,9 @@ const SplitLoadingScreen = ({ onComplete }) => {
                 </div>
                 
                 {/* Scientific diagnostic data feeds */}
-                <div className="flex gap-3 text-[8px] font-mono tracking-wider text-neutral-400 bg-black/35 px-4 py-1.5 border border-white/5 backdrop-blur-md rounded-full shadow-lg">
+                <div className="flex gap-3 text-[8px] font-mono tracking-wider text-neutral-200 bg-neutral-950/90 px-4 py-1.5 border border-blue-500/35 backdrop-blur-xl rounded-full shadow-[0_0_15px_rgba(59,130,246,0.15)]">
                   <span className="flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-blue-500 animate-pulse" /> LINK: OK</span>
-                  <span className="w-[1px] bg-white/10" />
+                  <span className="w-[1px] bg-white/15" />
                   <span className="flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" /> AUDIO: OK</span>
                 </div>
               </button>
