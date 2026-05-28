@@ -6,6 +6,26 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
+html {
+  font-size: 14.5px;
+  scroll-behavior: smooth;
+}
+@media (max-width: 1536px) {
+  html {
+    font-size: 13.5px; /* Fits laptop viewports like MacBook perfectly */
+  }
+}
+@media (max-width: 1280px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media (max-width: 768px) {
+  html {
+    font-size: 15px; /* Default sizing for mobile readability */
+  }
+}
+
 :root {
   background-color: #fafafa;
   color: #000000;
@@ -16,7 +36,8 @@ body {
   overflow-x: hidden;
   background-color: #fafafa;
   font-family: var(--font-sans);
-  zoom: 0.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom animations for premium high-tech visual aids */

@@ -458,14 +458,14 @@ export default function App() {
     if (!sections) return;
 
     const pin = gsap.to(sections, {
-      x: () => -(sections.scrollWidth - (window.innerWidth / 0.75)),
+      x: () => -(sections.scrollWidth - window.innerWidth),
       ease: "none",
       scrollTrigger: {
         trigger: triggerRef.current,
         pin: true,
         scrub: 1,
         start: "top top",
-        end: () => `+=${sections.scrollWidth - (window.innerWidth / 0.75)}`,
+        end: () => `+=${sections.scrollWidth - window.innerWidth}`,
         invalidateOnRefresh: true,
       }
     });
@@ -688,7 +688,7 @@ export default function App() {
 
 
       {/* 1. AI ENGINEER ABOUT ME SECTION */}
-      <section id="about" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-14 overflow-hidden">
+      <section id="about" className="relative py-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-10 overflow-hidden">
         
         {/* Background Ambient Effects */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
@@ -761,7 +761,7 @@ export default function App() {
       </section>
 
       {/* 2. EXPERIENCE SECTION */}
-      <section id="experience" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-14 overflow-hidden border-t border-neutral-100/50">
+      <section id="experience" className="relative py-20 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-10 overflow-hidden border-t border-neutral-100/50">
         
         {/* Section Header */}
         <div className="scroll-reveal flex flex-col items-center text-center gap-5 relative w-full mb-8">
@@ -1003,12 +1003,12 @@ export default function App() {
       </section>
 
       {/* 6. CLIENT REVIEWS SECTION: Silicon Valley Dark Showcase */}
-      <section id="testimonials" className="relative py-32 bg-black border-y border-neutral-900 z-10">
+      <section id="testimonials" className="relative py-20 bg-black border-y border-neutral-900 z-10">
         {/* Futuristic glowing backdrop gradients */}
         <div className="absolute top-1/4 left-1/10 w-[350px] h-[350px] bg-blue-500/10 rounded-full blur-[110px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/10 w-[300px] h-[300px] bg-cyan-500/8 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 md:px-20 flex flex-col gap-20 relative z-10">
+        <div className="max-w-6xl mx-auto px-6 sm:px-12 md:px-20 flex flex-col gap-12 relative z-10">
           <div className="scroll-reveal flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="flex flex-col gap-3">
               <span className="text-blue-500 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">TRUSTED BY FOUNDERS GLOBALLY</span>

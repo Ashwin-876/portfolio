@@ -233,7 +233,7 @@ export default function TechStack() {
   ];
 
   return (
-    <section className="relative py-40 bg-white overflow-hidden z-10 selection:bg-blue-500/30">
+    <section className="relative py-20 bg-white overflow-hidden z-10 selection:bg-blue-500/30">
       
       {/* Abstract Background Grid & Lighting */}
       <div className="absolute inset-0 z-0 pointer-events-none">

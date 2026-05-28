@@ -111,7 +111,7 @@ export default function ContactCTA() {
     <section 
       ref={containerRef}
       id="contact" 
-      className="relative min-h-screen w-full bg-black flex items-center justify-center overflow-hidden py-32 z-10"
+      className="relative min-h-screen w-full bg-black flex items-center justify-center overflow-hidden py-20 z-10"
     >
       {/* --- BACKGROUND EFFECTS --- */}
 
