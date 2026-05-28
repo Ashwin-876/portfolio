@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import image1 from '../assets/image-1.png';
 
-const FRAME = 300; // Premium shrunken TrueFocus frame size for laptop screens
+const FRAME = 550; // Premium shrunken TrueFocus frame size for laptop screens
 
 export default function PremiumHero() {
   const sectionRef        = useRef(null);
@@ -150,24 +150,24 @@ export default function PremiumHero() {
   const corner = (pos) => {
     const s = {
       position: 'absolute',
-      width: 18,
-      height: 18,
+      width: 22,
+      height: 22,
       borderStyle: 'solid',
       borderColor: '#3b82f6',
       borderRadius: 3,
       filter: 'drop-shadow(0 0 6px rgba(59,130,246,0.8)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
     };
-    if (pos === 'tl') return { ...s, top: -9,  left: -9,  borderWidth: '2px 0 0 2px' };
-    if (pos === 'tr') return { ...s, top: -9,  right: -9, borderWidth: '2px 2px 0 0' };
-    if (pos === 'bl') return { ...s, bottom: -9, left: -9, borderWidth: '0 0 2px 2px' };
-    if (pos === 'br') return { ...s, bottom: -9, right: -9, borderWidth: '0 2px 2px 0' };
+    if (pos === 'tl') return { ...s, top: -11,  left: -11,  borderWidth: '2.5px 0 0 2.5px' };
+    if (pos === 'tr') return { ...s, top: -11,  right: -11, borderWidth: '2.5px 2.5px 0 0' };
+    if (pos === 'bl') return { ...s, bottom: -11, left: -11, borderWidth: '0 0 2.5px 2.5px' };
+    if (pos === 'br') return { ...s, bottom: -11, right: -11, borderWidth: '0 2.5px 2.5px 0' };
   };
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      className="relative w-full h-[86vh] min-h-[85vh] bg-[#fafafa] overflow-hidden flex items-center justify-center select-none"
+      className="relative w-full h-screen bg-[#fafafa] overflow-hidden flex items-center justify-center select-none"
       style={{ cursor: 'none' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -183,7 +183,7 @@ export default function PremiumHero() {
       <div
         ref={imageContainerRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-10"
-        style={{ transform: 'translateY(4vh) scale(0.72)' }}
+        style={{ transform: 'translateY(6vh) scale(0.93)' }}
       >
         <div className="absolute w-[60%] h-[75%] top-[12%] left-[20%] bg-black/4 rounded-[3.5rem] blur-[35px] z-0" />
 
@@ -258,12 +258,12 @@ export default function PremiumHero() {
       </div>
 
       {/* ── Content overlay ─────────────────────────────────────── */}
-      <div className="absolute bottom-8 md:bottom-12 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-2 pointer-events-none max-w-[90%] md:max-w-2xl">
+      <div className="absolute bottom-16 md:bottom-24 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-3 pointer-events-none max-w-[90%] md:max-w-2xl">
         <span ref={eyebrowRef} className="text-neutral-400 font-bold uppercase tracking-[0.25em] text-[9px] md:text-xs opacity-0">
           ASHWIN S PORTFOLIO
         </span>
 
-        <h1 ref={headingRef} className="text-black text-lg sm:text-2xl md:text-3xl lg:text-[1.8rem] font-light tracking-tight leading-[1.18] opacity-0">
+        <h1 ref={headingRef} className="text-black text-lg sm:text-2xl md:text-3xl lg:text-[2.2rem] font-light tracking-tight leading-[1.18] opacity-0">
           Building modern digital experiences with{' '}
           <br className="hidden sm:inline" />
           <span className="font-normal border-b-2 border-blue-500/80 pr-1 select-all">{currentText}</span>
