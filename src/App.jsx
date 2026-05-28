@@ -1020,11 +1020,11 @@ export default function App() {
           </div>
 
           {/* Interactive Folder for Client Reviews */}
-          <div className="flex justify-center items-center pt-[220px] pb-[220px] h-[950px]">
+          <div className="flex justify-center items-center pt-[100px] pb-[100px] h-[720px]">
             <Folder
               color="#FFC107"
-              size={0.8}
-              className="mt-10"
+              size={1}
+              className="mt-6"
               items={[
                   {
                     name: "Daniel Carter",
@@ -1071,30 +1071,30 @@ export default function App() {
                 ].map((client, index) => (
                   <div 
                     key={index} 
-                    className="w-full h-full bg-[#0a0b0d]/70 backdrop-blur-xl hover:bg-[#0a0b0d] hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-all duration-500 p-8 flex flex-col justify-between gap-6 cursor-pointer"
+                    className="w-full h-full bg-[#0a0b0d]/70 backdrop-blur-xl hover:bg-[#0a0b0d] hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-all duration-500 p-5 md:p-6 flex flex-col justify-between gap-3 cursor-pointer"
                   >
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2.5">
                       {/* Rating 5-stars with soft cyan neon glow */}
-                      <div className="flex gap-1 text-cyan-400">
+                      <div className="flex gap-0.5 text-cyan-400">
                         {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-4.5 h-4.5 fill-current drop-shadow-[0_0_4px_rgba(34,211,238,0.4)]" viewBox="0 0 24 24">
+                          <svg key={i} className="w-4 h-4 fill-current drop-shadow-[0_0_4px_rgba(34,211,238,0.4)]" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                           </svg>
                         ))}
                       </div>
 
-                      <p className="text-neutral-300 font-light text-xs sm:text-sm leading-relaxed italic">
+                      <p className="text-neutral-200 font-light leading-relaxed italic" style={{ fontSize: 'clamp(0.95rem, 1vw, 1.1rem)' }}>
                         “{client.text}”
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3 border-t border-white/5 pt-4 mt-2">
-                      <div className={`w-10 h-10 rounded-full bg-gradient-to-tr ${client.color} flex items-center justify-center font-bold text-white text-sm shadow-[0_0_15px_rgba(59,130,246,0.15)]`}>
+                    <div className="flex items-center gap-2.5 border-t border-white/5 pt-3 mt-1">
+                      <div className={`w-8.5 h-8.5 rounded-full bg-gradient-to-tr ${client.color} flex items-center justify-center font-bold text-white text-xs shadow-[0_0_15px_rgba(59,130,246,0.15)]`}>
                         {client.initial}
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-white">{client.name}</span>
-                        <span className="text-[10px] font-mono text-neutral-500 tracking-wider mt-0.5">{client.role}</span>
+                        <span className="font-semibold text-white leading-tight" style={{ fontSize: 'clamp(1rem, 1.2vw, 1.2rem)' }}>{client.name}</span>
+                        <span className="text-[9px] font-mono text-neutral-400 tracking-wider mt-0.5">{client.role}</span>
                       </div>
                     </div>
                   </div>
