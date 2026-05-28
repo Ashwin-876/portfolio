@@ -1103,12 +1103,14 @@ export default function App() {
             />
           </div>
 
-          {/* Animated Statistics Section - Edge to Edge Horizontal Line */}
+          {/* Animated Statistics Section - Responsive Grid */}
           <div 
-            className="scroll-reveal border-t border-neutral-900 pt-20 mt-12 relative z-10"
-            style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)' }}
+            className="scroll-reveal border-y border-neutral-900/60 py-20 mt-16 relative z-10 w-full"
           >
-            <div className="flex flex-row items-start justify-between gap-12 overflow-x-auto hide-scrollbar px-6 sm:px-12 md:px-24">
+            {/* Soft grid background */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 sm:gap-6 max-w-7xl mx-auto w-full px-6 sm:px-12 md:px-16 relative z-10">
               {[
                 { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
                 { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
@@ -1123,6 +1125,7 @@ export default function App() {
                   valueStr={stat.value} 
                   label={stat.label} 
                   desc={stat.desc} 
+                  delay={idx * 0.12}
                 />
               ))}
             </div>
