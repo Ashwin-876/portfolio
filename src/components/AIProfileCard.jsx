@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { ArrowRight, Fingerprint, Database, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 

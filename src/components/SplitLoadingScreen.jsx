@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import avatarImg from '../assets/avatar_cartoon.png';
+import avatarImg from '../assets/avatar_cartoon.webp';
 import startupSfx from '../assets/audio/startup.wav';
 import humSfx from '../assets/audio/hum.wav';
 import tickSfx from '../assets/audio/tick.wav';
@@ -106,7 +106,7 @@ const SplitLoadingScreen = ({ onComplete }) => {
     gsap.set(characterRef.current, { xPercent: -56.73, yPercent: -50 });
 
     // Idle character animation
-    gsap.to(characterRef.current, {
+    const idleTween = gsap.to(characterRef.current, {
       y: -15,
       duration: 2,
       repeat: -1,
@@ -115,6 +115,7 @@ const SplitLoadingScreen = ({ onComplete }) => {
     });
 
     return () => {
+      idleTween.kill();
       document.body.style.overflow = 'auto';
     };
   }, []);
@@ -264,10 +265,10 @@ const SplitLoadingScreen = ({ onComplete }) => {
           className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none"
         >
           
-          {/* Character (Absolute Center) */}
+          {/* Character (positioned upper-center) */}
           <div 
             ref={characterRef}
-            className="absolute top-1/2 left-1/2 w-72 h-72 md:w-96 md:h-96"
+            className="absolute top-[36%] left-1/2 w-64 h-64 md:w-80 md:h-80"
           >
             {/* Cinematic Bloom behind character */}
             <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl animate-pulse mix-blend-screen" />
@@ -279,14 +280,14 @@ const SplitLoadingScreen = ({ onComplete }) => {
           </div>
 
           {/* Glowing Connection Lines from Character to Holographic Box */}
-          <div className="absolute top-[52%] left-1/2 -translate-x-1/2 h-[7%] w-[1px] bg-gradient-to-b from-blue-500/40 via-cyan-400/80 to-blue-500/40 shadow-[0_0_8px_rgba(59,130,246,0.6)] z-20 overflow-hidden">
+          <div className="absolute top-[48%] left-1/2 -translate-x-1/2 h-[6%] w-[1px] bg-gradient-to-b from-blue-500/40 via-cyan-400/80 to-blue-500/40 shadow-[0_0_8px_rgba(59,130,246,0.6)] z-20 overflow-hidden">
             {/* Pulsing energy dot flowing down */}
             <div className="w-full h-4 bg-gradient-to-b from-transparent via-white to-transparent animate-[flowDown_1.5s_infinite_linear]" />
           </div>
 
           {/* Holographic Interface Box (Jarvis inspired) */}
           <div 
-            className="absolute top-[59%] md:top-[60%] left-1/2 -translate-x-1/2 w-80 md:w-96 h-36 md:h-40 rounded-2xl border border-blue-500/35 bg-gradient-to-br from-[#060814]/85 to-[#0b1026]/40 backdrop-blur-2xl shadow-[0_0_40px_rgba(59,130,246,0.2),inset_0_0_20px_rgba(59,130,246,0.15)] p-4 flex flex-col justify-between overflow-hidden z-20 pointer-events-auto transition-all duration-500 hover:scale-[1.03] hover:border-blue-400 hover:shadow-[0_0_50px_rgba(59,130,246,0.4)] group"
+            className="absolute top-[54%] left-1/2 -translate-x-1/2 w-80 md:w-96 h-36 rounded-2xl border border-blue-500/35 bg-gradient-to-br from-[#060814]/85 to-[#0b1026]/40 backdrop-blur-2xl shadow-[0_0_40px_rgba(59,130,246,0.2),inset_0_0_20px_rgba(59,130,246,0.15)] p-4 flex flex-col justify-between overflow-hidden z-20 pointer-events-auto transition-all duration-500 hover:scale-[1.03] hover:border-blue-400 hover:shadow-[0_0_50px_rgba(59,130,246,0.4)] group"
           >
             {/* Cinematic Bloom Underneath Card */}
             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-10 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
@@ -370,43 +371,36 @@ const SplitLoadingScreen = ({ onComplete }) => {
             </div>
           </div>
 
-          {/* Interactive Core system initializer or Progress bar (Positioned beautifully at the bottom) */}
-          <div className="absolute bottom-10 md:bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center w-full max-w-sm px-6">
+          {/* Interactive Core system initializer or Progress bar (Positioned at bottom, always visible) */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center w-full max-w-sm px-6">
             {!isInitialized ? (
               <button 
                 onClick={handleInitialize}
                 className="group pointer-events-auto flex flex-col items-center gap-4 cursor-pointer"
               >
                 {/* Sci-Fi glowing circular controller */}
-                <div className="relative w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-full border border-blue-500/30 bg-black/40 backdrop-blur-xl shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-500 hover:scale-105 hover:border-blue-400 hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]">
+                <div className="relative w-36 h-36 md:w-40 md:h-40 flex items-center justify-center rounded-full border border-blue-500/30 bg-black/60 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.35),0_0_80px_rgba(59,130,246,0.15)] transition-all duration-500 hover:scale-105 hover:border-blue-400 hover:shadow-[0_0_50px_rgba(59,130,246,0.6)]">
                   {/* Outer pulsing ring */}
                   <div className="absolute inset-0 rounded-full border border-cyan-400/40 animate-ping opacity-25 group-hover:opacity-50" />
                   {/* Spinning holographic grid scanner */}
-                  <div className="absolute inset-1 rounded-full border border-dashed border-blue-400/50 animate-[spin_8s_linear_infinite]" />
-                  <div className="absolute inset-2 rounded-full border-t border-r border-blue-400 animate-[spin_3s_linear_infinite]" />
+                  <div className="absolute inset-1.5 rounded-full border border-dashed border-blue-400/50 animate-[spin_8s_linear_infinite]" />
+                  <div className="absolute inset-3 rounded-full border-t border-r border-blue-400 animate-[spin_3s_linear_infinite]" />
                   
-                  <div className="flex flex-col items-center justify-center text-center px-2">
-                    <span className="text-[7px] font-mono tracking-[0.2em] text-blue-400 animate-pulse">DEEP MIND OS</span>
-                    <span className="text-[10px] font-black tracking-widest text-white mt-1 group-hover:text-blue-200 transition-colors duration-300">INITIALIZE</span>
-                    <span className="text-[7px] font-mono tracking-widest text-neutral-400 uppercase mt-0.5">[ CLICK ]</span>
+                  <div className="flex flex-col items-center justify-center text-center px-4">
+                    <span className="text-[9px] md:text-[10px] font-mono tracking-[0.2em] text-blue-400 animate-pulse">DEEP MIND OS</span>
+                    <span className="text-[14px] md:text-[16px] font-black tracking-widest text-white mt-1.5 group-hover:text-blue-200 transition-colors duration-300">INITIALIZE</span>
+                    <span className="text-[9px] md:text-[10px] font-mono tracking-widest text-neutral-400 uppercase mt-1">[ CLICK ]</span>
                   </div>
-                </div>
-                
-                {/* Scientific diagnostic data feeds */}
-                <div className="flex gap-3 text-[8px] font-mono tracking-wider text-neutral-200 bg-neutral-950/90 px-4 py-1.5 border border-blue-500/35 backdrop-blur-xl rounded-full shadow-[0_0_15px_rgba(59,130,246,0.15)]">
-                  <span className="flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-blue-500 animate-pulse" /> LINK: OK</span>
-                  <span className="w-[1px] bg-white/15" />
-                  <span className="flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" /> AUDIO: OK</span>
                 </div>
               </button>
             ) : (
               <div className="flex flex-col items-center w-full">
                 {/* Text */}
                 <div className="text-center z-10 flex flex-col items-center">
-                  <h1 ref={textRef} className="text-4xl md:text-5xl font-bold tracking-tight text-white mix-blend-difference mb-3 drop-shadow-lg">
+                  <h1 ref={textRef} className="text-4xl md:text-5xl font-bold tracking-tight text-white mix-blend-difference mb-3">
                     Hi 👋
                   </h1>
-                  <div className="h-7 overflow-hidden rounded-full border border-white/10 bg-black/25 backdrop-blur-md mix-blend-difference shadow-[0_0_15px_rgba(0,0,0,0.2)]">
+                  <div className="h-7 overflow-hidden rounded-full border border-white/10 bg-[#090a10] shadow-[0_8px_25px_rgba(0,0,0,0.3)]">
                     <p ref={subtextRef} className="text-[10px] md:text-xs font-mono tracking-widest text-neutral-300 uppercase px-4 py-1.5">
                       {loadingMessages[messageIndex]}
                     </p>
@@ -415,13 +409,13 @@ const SplitLoadingScreen = ({ onComplete }) => {
 
                 {/* Holographic Progress Bar */}
                 <div ref={progressBarRef} className="mt-8 w-64 md:w-80 flex flex-col items-center gap-3 z-10">
-                  <div className="flex items-center justify-between w-full text-[9px] md:text-[10px] font-mono font-bold tracking-[0.3em] text-blue-400 mix-blend-difference">
+                  <div className="flex items-center justify-between w-full text-[9px] md:text-[10px] font-mono font-bold tracking-[0.3em] text-white mix-blend-difference">
                     <span>&lt; L O A D I N G &gt;</span>
                     <span>{progress}%</span>
                   </div>
                   
                   {/* Holographic Glass Container */}
-                  <div className="w-full h-1.5 bg-neutral-900/50 backdrop-blur-md rounded-full overflow-hidden relative border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.2)] mix-blend-difference">
+                  <div className="w-full h-1.5 bg-[#090a10] rounded-full overflow-hidden relative border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
                     
                     {/* Animated Progress Fill */}
                     <div 

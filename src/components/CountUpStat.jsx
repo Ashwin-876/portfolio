@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -20,12 +20,12 @@ export default function CountUpStat({ valueStr, label, desc }) {
     
     const tween = gsap.to(obj, {
       val: targetNum,
-      duration: 6.0,
-      ease: 'power3.out',
+      duration: 1.2, // Fast and smooth counting
+      ease: 'power2.out',
       scrollTrigger: {
         trigger: triggerRef.current,
-        start: 'top 85%',
-        toggleActions: 'play none none none'
+        start: 'top 90%',
+        toggleActions: 'play none none none' // Play once to prevent getting stuck due to parent reveal translation
       },
       onUpdate: () => {
         setCount(Math.floor(obj.val));

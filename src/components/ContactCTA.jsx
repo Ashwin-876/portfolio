@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -23,7 +23,7 @@ export default function ContactCTA() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWord((prev) => (prev + 1) % words.length);
-    }, 3000);
+    }, 1500);
     return () => clearInterval(interval);
   }, []);
 
@@ -78,7 +78,7 @@ export default function ContactCTA() {
     if (!containerRef.current) return;
 
     const elements = containerRef.current.querySelectorAll('.reveal-up');
-    gsap.fromTo(elements,
+    const revealTween = gsap.fromTo(elements,
       { y: 50, opacity: 0, filter: 'blur(10px)' },
       {
         y: 0,
@@ -95,7 +95,7 @@ export default function ContactCTA() {
     );
 
     // Subtle parallax on background elements
-    gsap.to('.bg-parallax', {
+    const parallaxTween = gsap.to('.bg-parallax', {
       yPercent: 30,
       ease: 'none',
       scrollTrigger: {
@@ -105,6 +105,13 @@ export default function ContactCTA() {
         scrub: true
       }
     });
+
+    return () => {
+      revealTween.kill();
+      if (revealTween.scrollTrigger) revealTween.scrollTrigger.kill();
+      parallaxTween.kill();
+      if (parallaxTween.scrollTrigger) parallaxTween.scrollTrigger.kill();
+    };
   }, []);
 
   return (
@@ -151,7 +158,7 @@ export default function ContactCTA() {
                 initial={{ y: 50, opacity: 0, filter: 'blur(8px)' }}
                 animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
                 exit={{ y: -50, opacity: 0, filter: 'blur(8px)' }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute left-1/2 -translate-x-1/2 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 drop-shadow-[0_0_30px_rgba(96,165,250,0.3)] whitespace-nowrap"
               >
                 {words[currentWord]}

@@ -28,6 +28,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
   }
 
   const [open, setOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [paperOffsets, setPaperOffsets] = useState(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
   const folderRef = useRef(null);
 
@@ -40,6 +41,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
         } else {
           setOpen(false);
           setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
+          setHoveredIndex(null);
         }
       },
       { 
@@ -48,13 +50,14 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
       }
     );
 
-    if (folderRef.current) {
-      observer.observe(folderRef.current);
+    const currentFolder = folderRef.current;
+    if (currentFolder) {
+      observer.observe(currentFolder);
     }
 
     return () => {
-      if (folderRef.current) {
-        observer.unobserve(folderRef.current);
+      if (currentFolder) {
+        observer.unobserve(currentFolder);
       }
     };
   }, [maxItems]);
@@ -87,6 +90,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
       newOffsets[index] = { x: offsetX, y: offsetY };
       return newOffsets;
     });
+    setHoveredIndex(index);
   };
 
   const handlePaperMouseLeave = (e, index) => {
@@ -120,12 +124,14 @@ const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => 
             <div
               key={i}
               className={`paper paper-${i + 1}`}
+              onMouseMove={(e) => handlePaperMouseMove(e, i)}
+              onMouseLeave={(e) => handlePaperMouseLeave(e, i)}
               style={
                 open
                   ? {
-                      '--magnet-x': '0px',
-                      '--magnet-y': '0px',
-                      zIndex: i + 1,
+                      '--magnet-x': `${paperOffsets[i]?.x || 0}px`,
+                      '--magnet-y': `${paperOffsets[i]?.y || 0}px`,
+                      zIndex: hoveredIndex === i ? 50 : i + 1,
                     }
                   : { zIndex: i + 1 }
               }

@@ -1,10 +1,19 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import image1 from '../assets/image-1.png';
+import image1 from '../assets/image-1.webp';
 
-const FRAME = 550; // TrueFocus frame size
+const FRAME = 380; // TrueFocus frame size
+
+const words = [
+  'Full Stack Developer',
+  'UI/UX Designer',
+  'AI Enthusiast',
+  'Creative Technologist',
+  'Frontend Specialist',
+  'Motion Designer',
+];
 
 export default function PremiumHero() {
   const sectionRef        = useRef(null);
@@ -20,7 +29,7 @@ export default function PremiumHero() {
 
   // Use refs to avoid re-renders and stale closures
   const isTracking = useRef(false);
-  const maskProps = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 }).current;
+  const maskPropsRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
   // GSAP quickTo setters for ultra-high-performance tracking
   const maskXTo = useRef(null);
@@ -29,14 +38,6 @@ export default function PremiumHero() {
   const frameYTo = useRef(null);
 
   // ── Typing animation ─────────────────────────────────────────
-  const words = [
-    'Full Stack Developer',
-    'UI/UX Designer',
-    'AI Enthusiast',
-    'Creative Technologist',
-    'Frontend Specialist',
-    'Motion Designer',
-  ];
   const [currentText, setCurrentText] = useState('');
   const [wordIndex, setWordIndex]     = useState(0);
   const [isDeleting, setIsDeleting]   = useState(false);
@@ -49,16 +50,23 @@ export default function PremiumHero() {
     } else {
       t = setTimeout(() => setCurrentText(word.slice(0, currentText.length + 1)), 75);
     }
-    if (!isDeleting && currentText === word) t = setTimeout(() => setIsDeleting(true), 2500);
-    if (isDeleting && currentText === '')    { setIsDeleting(false); setWordIndex(p => (p + 1) % words.length); }
+    if (!isDeleting && currentText === word) {
+      t = setTimeout(() => setIsDeleting(true), 2500);
+    }
+    if (isDeleting && currentText === '') {
+      t = setTimeout(() => {
+        setIsDeleting(false);
+        setWordIndex(p => (p + 1) % words.length);
+      }, 200);
+    }
     return () => clearTimeout(t);
   }, [currentText, isDeleting, wordIndex]);
 
   // ── GSAP setup for cursor tracking ───────────────────────────
   useEffect(() => {
     // Setup quickTo for smooth mask tracking
-    maskXTo.current = gsap.quickTo(maskProps, 'x', { duration: 0.3, ease: 'power3.out' });
-    maskYTo.current = gsap.quickTo(maskProps, 'y', { duration: 0.3, ease: 'power3.out' });
+    maskXTo.current = gsap.quickTo(maskPropsRef.current, 'x', { duration: 0.3, ease: 'power3.out' });
+    maskYTo.current = gsap.quickTo(maskPropsRef.current, 'y', { duration: 0.3, ease: 'power3.out' });
 
     // Setup quickTo for smooth frame tracking
     if (frameRef.current) {
@@ -69,34 +77,65 @@ export default function PremiumHero() {
     const updateMask = () => {
       if (!topImageRef.current) return;
       
-      // If not tracking, hide the sharp image entirely
+      // If not tracking, hide the sharp image and tracking frame entirely
       if (!isTracking.current) {
         topImageRef.current.style.clipPath = 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)';
         topImageRef.current.style.WebkitClipPath = 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)';
+        if (frameRef.current) {
+          frameRef.current.style.opacity = '0';
+        }
         return;
       }
 
       const rect = topImageRef.current.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
 
-      // Calculate the exact pixel bounds of the FRAME relative to the image's visual bounding box
-      const leftPx = maskProps.x - FRAME / 2 - rect.left;
-      const topPx = maskProps.y - FRAME / 2 - rect.top;
-      const rightPx = maskProps.x + FRAME / 2 - rect.left;
-      const bottomPx = maskProps.y + FRAME / 2 - rect.top;
+      // Calculate distance from screen center
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const dx = maskPropsRef.current.x - centerX;
+      const dy = maskPropsRef.current.y - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Convert to percentages (this perfectly cancels out any CSS scale or transform applied to the image)
+      // Interpolate focus factor (0 when far, 1 when close to center)
+      const minDim = Math.min(window.innerWidth, window.innerHeight);
+      const maxDistance = minDim * 0.28;
+      const minDistance = minDim * 0.08;
+      
+      const factor = distance <= minDistance
+        ? 1
+        : distance >= maxDistance
+          ? 0
+          : 1 - (distance - minDistance) / (maxDistance - minDistance);
+
+      // Calculate the exact pixel bounds of the FRAME relative to the image's visual bounding box
+      const leftPx = maskPropsRef.current.x - FRAME / 2 - rect.left;
+      const topPx = maskPropsRef.current.y - FRAME / 2 - rect.top;
+      const rightPx = maskPropsRef.current.x + FRAME / 2 - rect.left;
+      const bottomPx = maskPropsRef.current.y + FRAME / 2 - rect.top;
+
+      // Convert to percentages (cancels out CSS scale/transforms)
       const pLeft = (leftPx / rect.width) * 100;
       const pTop = (topPx / rect.height) * 100;
       const pRight = (rightPx / rect.width) * 100;
       const pBottom = (bottomPx / rect.height) * 100;
 
-      // Polygon safely supports negative percentages when the cursor is near the edge of the screen.
-      // toFixed(3) is CRITICAL to prevent Javascript from outputting scientific notation (e.g. 1.5e-7%) which breaks CSS parsing!
-      const clip = `polygon(${pLeft.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)}% ${pTop.toFixed(3)}%, ${pRight.toFixed(3)}% ${pBottom.toFixed(3)}%, ${pLeft.toFixed(3)}% ${pBottom.toFixed(3)}%)`;
+      // Interpolate coordinates between the standard tracking frame and the full image bounds (0% to 100%)
+      const clipLeft = pLeft * (1 - factor) + 0 * factor;
+      const clipTop = pTop * (1 - factor) + 0 * factor;
+      const clipRight = pRight * (1 - factor) + 100 * factor;
+      const clipBottom = pBottom * (1 - factor) + 100 * factor;
+
+      // Create clip-path polygon string
+      const clip = `polygon(${clipLeft.toFixed(3)}% ${clipTop.toFixed(3)}%, ${clipRight.toFixed(3)}% ${clipTop.toFixed(3)}%, ${clipRight.toFixed(3)}% ${clipBottom.toFixed(3)}%, ${clipLeft.toFixed(3)}% ${clipBottom.toFixed(3)}%)`;
       
       topImageRef.current.style.clipPath = clip;
       topImageRef.current.style.WebkitClipPath = clip;
+
+      // Smoothly dissolve the tracking frame (corner brackets, crosshairs, center dot) as we focus
+      if (frameRef.current) {
+        frameRef.current.style.opacity = (1 - factor).toString();
+      }
     };
 
     gsap.ticker.add(updateMask);
@@ -105,15 +144,20 @@ export default function PremiumHero() {
 
   // ── Entrance animations ───────────────────────────────────────
   useEffect(() => {
-    AOS.init({ duration: 1400, once: true, easing: 'ease-out-cubic' });
+    AOS.init({ duration: 1400, once: true, ease: 'ease-out-cubic' });
     const tl = gsap.timeline();
     tl.fromTo(eyebrowRef.current,    { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out', delay: 0.4 });
     tl.fromTo(headingRef.current,    { y: 35, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=0.75');
     tl.fromTo(subheadingRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=0.75');
     tl.fromTo(buttonsRef.current,    { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=0.75');
-    gsap.fromTo(imageContainerRef.current,
+    const floatTween = gsap.fromTo(imageContainerRef.current,
       { y: 0 }, { y: -14, duration: 3.5, ease: 'power1.inOut', repeat: -1, yoyo: true }
     );
+
+    return () => {
+      tl.kill();
+      floatTween.kill();
+    };
   }, []);
 
   // ── Mouse handlers ────────────────────────────────────────────
@@ -124,7 +168,7 @@ export default function PremiumHero() {
       isTracking.current = true;
       setIsHovering(true);
       // Immediately set initial position without animation so it doesn't fly in
-      gsap.set(maskProps, { x: e.clientX, y: e.clientY });
+      gsap.set(maskPropsRef.current, { x: e.clientX, y: e.clientY });
       if (frameRef.current) gsap.set(frameRef.current, { x: e.clientX - FRAME / 2, y: e.clientY - FRAME / 2 });
     }
 
@@ -139,7 +183,7 @@ export default function PremiumHero() {
     const xOff = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2) * strength;
     const yOff = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2) * strength;
     gsap.to(imageContainerRef.current, { x: xOff, y: yOff, duration: 0.7, ease: 'power2.out' });
-  }, []);
+  }, [maskPropsRef]);
 
   const handleMouseLeave = useCallback(() => {
     isTracking.current = false;

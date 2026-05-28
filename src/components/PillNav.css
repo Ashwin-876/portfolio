@@ -1,17 +1,29 @@
 .pill-nav {
   display: flex;
   align-items: center;
-  background-color: var(--base);
-  padding: 0.5rem 0.5rem;
+  /* Glassmorphism styling */
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.35rem 0.4rem;
   border-radius: 9999px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.1);
-  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   max-width: 100%;
-  transition: box-shadow 0.4s ease;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pill-nav:hover {
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.15);
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(59, 130, 246, 0.2);
+  /* Premium subtle glow + soft shadow */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05), 
+              0 0 16px rgba(59, 130, 246, 0.08), 
+              inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .pill-list {
@@ -20,7 +32,33 @@
   margin: 0;
   padding: 0;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.15rem; /* Reduced menu item spacing */
+}
+
+/* Compact Logo styling */
+.pill-logo-img {
+  width: 38px;
+  height: 38px;
+  background-color: #ffffff;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill-logo-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #111111;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+  margin-right: 1.25rem;
+  transition: color 0.3s ease;
 }
 
 .pill {
@@ -28,22 +66,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
+  padding: 0.45rem 0.9rem; /* Reduced padding */
   border-radius: 9999px;
   text-decoration: none;
   overflow: hidden;
   color: var(--pill-text);
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-weight: 600; /* Apple-like weight */
+  font-size: 0.68rem; /* Smaller typography */
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Base active state */
+/* Base active state - solid black rounded pill */
 .pill.is-active {
-  background-color: var(--pill-bg);
-  color: var(--hover-text);
+  background-color: var(--pill-bg); /* #111111 */
+  color: var(--hover-text); /* #ffffff */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 .pill.is-active .pill-label {
   color: var(--hover-text);
@@ -92,40 +131,51 @@
   display: none;
 }
 
-/* Mobile Hamburger */
+/* Mobile Hamburger Button with Glassmorphism */
 .mobile-menu-button {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--pill-bg);
-  border: none;
+  background: rgba(17, 17, 17, 0.05);
+  border: 1px solid rgba(17, 17, 17, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
   cursor: pointer;
   z-index: 50;
-}
-.hamburger-line {
-  width: 16px;
-  height: 2px;
-  background: var(--hover-text);
-  border-radius: 2px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Mobile Menu Popover */
+.mobile-menu-button:hover {
+  background: rgba(17, 17, 17, 0.08);
+  border-color: rgba(17, 17, 17, 0.15);
+  transform: scale(1.05);
+}
+
+.hamburger-line {
+  width: 14px;
+  height: 1.5px;
+  background: #111111;
+  border-radius: 1px;
+}
+
+/* Mobile Menu Popover with Premium Blur */
 .mobile-menu-popover {
   position: absolute;
-  top: calc(100% + 1rem);
+  top: calc(100% + 0.5rem);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--base);
-  border-radius: 24px;
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 0.75rem;
   width: calc(100% - 2rem);
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  max-width: 360px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   visibility: hidden;
   opacity: 0;
 }
@@ -136,24 +186,31 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .mobile-menu-link {
   display: block;
-  padding: 1rem;
+  padding: 0.75rem;
   text-decoration: none;
-  color: var(--pill-text);
+  color: #333333;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
   border-radius: 12px;
   text-align: center;
+  transition: all 0.3s ease;
 }
+
+.mobile-menu-link:hover {
+  background: rgba(17, 17, 17, 0.04);
+  color: #111111;
+}
+
 .mobile-menu-link.is-active {
-  background: var(--pill-bg);
-  color: var(--hover-text);
+  background: var(--pill-bg); /* #111111 */
+  color: var(--hover-text); /* #ffffff */
 }
 
 @media (max-width: 1024px) {

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Shuffle from './Shuffle';
-import { Layers, Server, Sparkles, Cpu, Activity, Network } from 'lucide-react';
+import { Layers, Server, Cpu, Activity } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,10 +27,9 @@ const HudCornerBrackets = () => (
   </>
 );
 
-const HudPanel = ({ title, icon: Icon, skills, colorClass, glowClass, isCenter = false, align = "right" }) => {
+const HudPanel = ({ title, icon: Icon, skills, colorClass, isCenter = false, align = "right" }) => {
   const wrapperRef = useRef(null);
   const cardRef = useRef(null);
-  const glowRef = useRef(null);
   const barsRef = useRef([]);
 
   const xTo = useRef(null);
@@ -49,8 +48,9 @@ const HudPanel = ({ title, icon: Icon, skills, colorClass, glowClass, isCenter =
     rotYTo.current = gsap.quickTo(cardRef.current, "rotationY", { duration: 0.6, ease: "power3.out" });
 
     // Animate energy bars on scroll
+    let anim;
     if (barsRef.current.length > 0) {
-      gsap.fromTo(barsRef.current, 
+      anim = gsap.fromTo(barsRef.current, 
         { width: "0%" },
         {
           width: (i, target) => target.dataset.width,
@@ -65,6 +65,12 @@ const HudPanel = ({ title, icon: Icon, skills, colorClass, glowClass, isCenter =
         }
       );
     }
+    return () => {
+      if (anim) {
+        anim.kill();
+        if (anim.scrollTrigger) anim.scrollTrigger.kill();
+      }
+    };
   }, []);
 
   const handleMouseMove = (e) => {
@@ -89,7 +95,7 @@ const HudPanel = ({ title, icon: Icon, skills, colorClass, glowClass, isCenter =
     rotYTo.current(0);
   };
 
-  const scaleClass = isCenter ? "z-20 scale-[1.1] shadow-[0_0_120px_rgba(59,130,246,0.2)]" : "z-10 scale-[1.05] opacity-95 hover:opacity-100 hover:z-30 hover:scale-[1.1]";
+  const scaleClass = isCenter ? "z-20 scale-[1.02] md:scale-[1.1] shadow-[0_0_120px_rgba(59,130,246,0.2)]" : "z-10 scale-[1.00] md:scale-[1.05] opacity-95 hover:opacity-100 hover:z-30 hover:scale-[1.02] md:hover:scale-[1.1]";
   const bgClass = isCenter ? "bg-white/95" : "bg-white/95";
 
   return (
@@ -178,6 +184,14 @@ const HudPanel = ({ title, icon: Icon, skills, colorClass, glowClass, isCenter =
   );
 };
 
+const staticParticles = [...Array(25)].map((_, i) => ({
+  id: i,
+  top: `${Math.random() * 100}%`,
+  left: `${Math.random() * 100}%`,
+  duration: `${4 + Math.random() * 5}s`,
+  delay: `${Math.random() * 3}s`
+}));
+
 export default function TechStack() {
   const containerRef = useRef(null);
 
@@ -185,7 +199,7 @@ export default function TechStack() {
     if (!containerRef.current) return;
     const cards = containerRef.current.querySelectorAll('.tech-panel-wrapper');
     
-    gsap.fromTo(cards,
+    const anim = gsap.fromTo(cards,
       { y: 150, opacity: 0, scale: 0.8 },
       {
         y: 0,
@@ -201,6 +215,11 @@ export default function TechStack() {
         }
       }
     );
+
+    return () => {
+      anim.kill();
+      if (anim.scrollTrigger) anim.scrollTrigger.kill();
+    };
   }, []);
 
   const frontendSkills = [
@@ -249,15 +268,15 @@ export default function TechStack() {
         
         {/* Floating Particles */}
         <div className="absolute inset-0">
-          {[...Array(25)].map((_, i) => (
+          {staticParticles.map((p) => (
             <div 
-              key={i}
+              key={p.id}
               className="absolute w-1 h-1 bg-blue-500/30 rounded-full"
               style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animation: `float ${4 + Math.random() * 5}s ease-in-out infinite alternate`,
-                animationDelay: `${Math.random() * 3}s`
+                top: p.top,
+                left: p.left,
+                animation: `float ${p.duration} ease-in-out infinite alternate`,
+                animationDelay: p.delay
               }}
             />
           ))}

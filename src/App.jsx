@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PremiumHero from './components/PremiumHero';
 import PillNav from './components/PillNav';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 import CircularGallery from './components/CircularGallery';
-import LogoLoop from './components/LogoLoop';
 import CountUpStat from './components/CountUpStat';
 import Shuffle from './components/Shuffle';
 import Folder from './components/Folder';
-import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript, SiHtml5, SiCss, SiNodedotjs, SiMongodb, SiFigma, SiGithub, SiPython, SiFirebase } from 'react-icons/si';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -16,34 +14,16 @@ import ContactCTA from './components/ContactCTA';
 import ContactForm from './components/ContactForm';
 import PremiumFooter from './components/PremiumFooter';
 import AIProfileCard from './components/AIProfileCard';
-import AITimeline from './components/AITimeline';
-import AITerminal from './components/AITerminal';
 import AIFuturisticExperience from './components/AIFuturisticExperience';
 import SplitLoadingScreen from './components/SplitLoadingScreen';
 
-const techLogos = [
-  { node: <SiReact />, title: "React", href: "https://react.dev" },
-  { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
-  { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
-  { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
-  { node: <SiJavascript />, title: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-  { node: <SiHtml5 />, title: "HTML5", href: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
-  { node: <SiCss />, title: "CSS", href: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
-  { node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
-  { node: <SiMongodb />, title: "MongoDB", href: "https://mongodb.com" },
-  { node: <SiFigma />, title: "Figma", href: "https://figma.com" },
-  { node: <SiGithub />, title: "GitHub", href: "https://github.com" },
-  { node: <SiPython />, title: "Python", href: "https://python.org" },
-  { node: <SiFirebase />, title: "Firebase", href: "https://firebase.google.com" },
-];
-
 // Import local premium AI Developer WebGL showcase images
-import aiNetworkImg from './assets/ai_network.png';
-import aiDashboardImg from './assets/ai_dashboard.png';
-import aiBrainImg from './assets/ai_brain.png';
-import aiGlobeImg from './assets/ai_globe.png';
-import aiCyberImg from './assets/ai_cyber.png';
-import aiFlowImg from './assets/ai_flow.png';
+import aiNetworkImg from './assets/ai_network.webp';
+import aiDashboardImg from './assets/ai_dashboard.webp';
+import aiBrainImg from './assets/ai_brain.webp';
+import aiGlobeImg from './assets/ai_globe.webp';
+import aiCyberImg from './assets/ai_cyber.webp';
+import aiFlowImg from './assets/ai_flow.webp';
 
 // Silicon Valley WebGL Gallery Items List
 const galleryItems = [
@@ -72,19 +52,20 @@ function CanvasBackground() {
     let particles = [];
     const properties = {
       bgColor: 'transparent',
-      particleColor: 'rgba(59, 130, 246, 0.08)', // Soft blue transparent nodes
+      particleColor: 'rgba(59, 130, 246, 0.12)', // Soft blue transparent nodes
       particleRadius: 2.2,
       particleCount: 75,
       maxVelocity: 0.6,
       lineLength: 140,
     };
 
-    window.onresize = () => {
-      if(canvas) {
+    const handleResize = () => {
+      if (canvas) {
         w = canvas.width = window.innerWidth;
         h = canvas.height = window.innerHeight;
       }
     };
+    window.addEventListener('resize', handleResize);
 
     class Particle {
       constructor() {
@@ -125,7 +106,7 @@ function CanvasBackground() {
           if (length < properties.lineLength) {
             opacity = 1 - (length / properties.lineLength);
             ctx.lineWidth = 0.6;
-            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity * 0.05})`; // Soft network lines
+            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity * 0.08})`; // Soft network lines
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -158,10 +139,11 @@ function CanvasBackground() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 w-screen h-screen pointer-events-none z-0" />;
 }
 
 // Exactly 6 Premium Services Data
@@ -408,7 +390,19 @@ function ServiceCard({ srv, isGrid }) {
 }
 
 export default function App() {
-  const [activeItem, setActiveItem] = useState('#home');
+  const activeItem = '#home';
+
+  // Force scroll restoration to manual and scroll to the top of the page on refresh/load
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    // Reset location hash to home if present
+    if (window.location.hash && window.location.hash !== '#home') {
+      window.location.hash = '#home';
+    }
+  }, []);
 
   const pillNavItems = [
     { label: 'HOME', href: '#home' },
@@ -472,6 +466,9 @@ export default function App() {
 
     return () => {
       pin.kill();
+      if (pin.scrollTrigger) {
+        pin.scrollTrigger.kill();
+      }
     };
   }, [loading]);
 
@@ -479,7 +476,7 @@ export default function App() {
   useEffect(() => {
     if (loading) return;
 
-    gsap.to(scrollIndicatorRef.current, {
+    const progressTween = gsap.to(scrollIndicatorRef.current, {
       scaleX: 1,
       ease: 'none',
       scrollTrigger: {
@@ -490,9 +487,10 @@ export default function App() {
       }
     });
 
+    const revealTweens = [];
     const revealElements = document.querySelectorAll('.scroll-reveal');
     revealElements.forEach((el) => {
-      gsap.fromTo(el, 
+      const tween = gsap.fromTo(el, 
         { y: 40, opacity: 0 },
         { 
           y: 0, 
@@ -506,7 +504,17 @@ export default function App() {
           }
         }
       );
+      revealTweens.push(tween);
     });
+
+    return () => {
+      progressTween.kill();
+      if (progressTween.scrollTrigger) progressTween.scrollTrigger.kill();
+      revealTweens.forEach(t => {
+        t.kill();
+        if (t.scrollTrigger) t.scrollTrigger.kill();
+      });
+    };
   }, [loading]);
 
   // Recalculate ScrollTrigger markers on view mode toggle
@@ -521,7 +529,7 @@ export default function App() {
     const cards = document.querySelectorAll('.grid-service-card');
     if (!cards.length) return;
 
-    gsap.fromTo(cards, 
+    const tween = gsap.fromTo(cards, 
       { y: 50, opacity: 0 },
       { 
         y: 0, 
@@ -536,6 +544,11 @@ export default function App() {
         }
       }
     );
+
+    return () => {
+      tween.kill();
+      if (tween.scrollTrigger) tween.scrollTrigger.kill();
+    };
   }, [loading, servicesViewMode]);
 
   // GSAP stagger reveal for testimonial reviews cards
@@ -545,7 +558,7 @@ export default function App() {
     const cards = document.querySelectorAll('.testimonial-card');
     if (!cards.length) return;
 
-    gsap.fromTo(cards, 
+    const tween = gsap.fromTo(cards, 
       { y: 50, opacity: 0 },
       { 
         y: 0, 
@@ -560,6 +573,11 @@ export default function App() {
         }
       }
     );
+
+    return () => {
+      tween.kill();
+      if (tween.scrollTrigger) tween.scrollTrigger.kill();
+    };
   }, [loading]);
 
 
@@ -667,7 +685,13 @@ export default function App() {
 
   return (
     <div className="relative w-full min-h-screen bg-[#fafafa] font-sans overflow-x-hidden">
-      {loading && <SplitLoadingScreen onComplete={() => setLoading(false)} />}
+      {loading && <SplitLoadingScreen onComplete={() => {
+        setLoading(false);
+        window.scrollTo(0, 0);
+      }} />}
+
+      {/* Floating Canvas Particle Network Background */}
+      {!loading && <CanvasBackground />}
       
       <PillNav 
         items={pillNavItems}
@@ -737,17 +761,12 @@ export default function App() {
             </div>
 
             {/* Floating Tech Badges */}
-            <div className="flex flex-wrap gap-4 mt-4">
+            <div className="flex flex-wrap gap-3.5 mt-4">
               {['AI Systems', 'Neural UI', 'Automation', 'Computer Vision', 'Intelligent Interfaces', 'Vision AI', 'Machine Learning', 'Smart Workflows'].map((badge) => (
-                <div key={badge} className="px-6 py-3 bg-white/60 backdrop-blur-md border border-neutral-200/60 rounded-full text-sm md:text-base font-semibold text-neutral-700 shadow-sm hover:shadow-md hover:border-blue-300 hover:text-blue-600 transition-all duration-300 cursor-default">
+                <div key={badge} className="px-5 py-2.5 bg-white/60 backdrop-blur-md border border-neutral-200/60 rounded-full text-xs sm:text-sm font-semibold text-neutral-700 shadow-sm hover:shadow-md hover:border-blue-300 hover:text-blue-600 transition-all duration-300 cursor-default">
                   {badge}
                 </div>
               ))}
-            </div>
-
-            {/* AI Terminal Simulation */}
-            <div className="mt-8">
-              <AITerminal />
             </div>
 
           </div>
@@ -761,12 +780,12 @@ export default function App() {
       </section>
 
       {/* 2. EXPERIENCE SECTION */}
-      <section id="experience" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-14 overflow-hidden border-t border-neutral-100/50">
+      <section id="experience" className="relative py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto z-10 flex flex-col gap-10 overflow-hidden border-t border-neutral-100/50">
         
         {/* Section Header */}
-        <div className="scroll-reveal flex flex-col items-center text-center gap-5 relative w-full mb-8">
-          <div className="flex items-center gap-3 text-violet-600 font-mono text-[10px] md:text-xs tracking-[0.4em] uppercase mb-2 bg-violet-500/5 px-5 py-2 rounded-full border border-violet-500/20 shadow-[0_0_15px_rgba(139,92,246,0.1)]">
-            <span className="w-2 h-2 bg-violet-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+        <div className="scroll-reveal flex flex-col items-center text-center gap-5 relative w-full mb-4">
+          <div className="flex items-center gap-3 text-blue-600 font-mono text-[10px] md:text-xs tracking-[0.4em] uppercase mb-2 bg-blue-500/5 px-5 py-2 rounded-full border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
             <span>02 / EXPERIENCE</span>
           </div>
           
@@ -784,7 +803,7 @@ export default function App() {
                 textAlign="center"
               />
               {/* Cinematic sweeping underline (Centered) */}
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-[4px] bg-gradient-to-r from-transparent via-violet-500 to-transparent group-hover:w-[80%] transition-all duration-1000 ease-out rounded-full shadow-[0_0_20px_rgba(139,92,246,0.5)]" />
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-24 h-[4px] bg-gradient-to-r from-transparent via-blue-500 to-transparent group-hover:w-[80%] transition-all duration-1000 ease-out rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]" />
             </div>
             
             <p className="text-neutral-500 font-light text-base md:text-lg max-w-2xl mt-4">
@@ -819,7 +838,7 @@ export default function App() {
           {projectsData.map((project) => (
             <div 
               key={project.num}
-              className="w-[380px] sm:w-[480px] h-[60vh] flex-shrink-0 bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur-md flex flex-col justify-between group hover:border-white/20 transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.2)]"
+              className="w-[85vw] sm:w-[440px] h-[76vh] flex-shrink-0 bg-white/5 border border-white/10 p-6 sm:p-10 rounded-[2rem] backdrop-blur-md flex flex-col justify-between group hover:border-white/20 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
             >
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
@@ -1103,33 +1122,51 @@ export default function App() {
             />
           </div>
 
-          {/* Animated Statistics Section - Edge to Edge Horizontal Line */}
           <div 
-            className="scroll-reveal border-t border-neutral-900 pt-20 mt-12 relative z-10"
+            className="scroll-reveal pt-20 mt-12 relative z-10 w-screen overflow-hidden"
             style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)' }}
           >
-            <div className="flex flex-row items-start justify-between gap-12 overflow-x-auto hide-scrollbar px-6 sm:px-12 md:px-24">
-              {[
-                { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
-                { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
-                { value: "99%", label: "CLIENT SATISFACTION", desc: "Delivering quality & performance" },
-                { value: "4+", label: "HACKATHONS WON", desc: "National-level innovation challenges" },
-                { value: "15+", label: "AWARDS WON", desc: "National & international recognitions" },
-                { value: "24/7", label: "SUPPORT AVAILABLE", desc: "Fast response & maintenance support" },
-                { value: "2+", label: "YEARS LEARNING", desc: "UI/UX, frontend & animations" }
-              ].map((stat, idx) => (
-                <CountUpStat 
-                  key={idx} 
-                  valueStr={stat.value} 
-                  label={stat.label} 
-                  desc={stat.desc} 
-                />
-              ))}
+            <div className="relative flex w-full overflow-x-hidden py-4 pointer-events-auto group">
+              <div className="animate-stats-marquee group-hover:[animation-play-state:paused] flex gap-16 md:gap-24 items-center pr-16 md:pr-24">
+                {[
+                  { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
+                  { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
+                  { value: "99%", label: "CLIENT SATISFACTION", desc: "Delivering quality & performance" },
+                  { value: "4+", label: "HACKATHONS WON", desc: "National-level innovation challenges" },
+                  { value: "15+", label: "AWARDS WON", desc: "National & international recognitions" },
+                  { value: "24/7", label: "SUPPORT AVAILABLE", desc: "Fast response & maintenance support" },
+                  { value: "2+", label: "YEARS LEARNING", desc: "UI/UX, frontend & animations" }
+                ].map((stat, idx) => (
+                  <CountUpStat 
+                    key={`stat-1-${idx}`} 
+                    valueStr={stat.value} 
+                    label={stat.label} 
+                    desc={stat.desc} 
+                  />
+                ))}
+                
+                {/* Duplicated List for seamless looping */}
+                {[
+                  { value: "120+", label: "PROJECTS COMPLETED", desc: "Modern web & creative solutions" },
+                  { value: "40+", label: "GLOBAL CLIENTS", desc: "Trusted by startups worldwide" },
+                  { value: "99%", label: "CLIENT SATISFACTION", desc: "Delivering quality & performance" },
+                  { value: "4+", label: "HACKATHONS WON", desc: "National-level innovation challenges" },
+                  { value: "15+", label: "AWARDS WON", desc: "National & international recognitions" },
+                  { value: "24/7", label: "SUPPORT AVAILABLE", desc: "Fast response & maintenance support" },
+                  { value: "2+", label: "YEARS LEARNING", desc: "UI/UX, frontend & animations" }
+                ].map((stat, idx) => (
+                  <CountUpStat 
+                    key={`stat-2-${idx}`} 
+                    valueStr={stat.value} 
+                    label={stat.label} 
+                    desc={stat.desc} 
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* 3D WebGL Creative Showcase Carousel — True Full-Bleed */}
-          <div className="border-t border-neutral-950 pt-28 mt-12 w-full flex flex-col gap-10 relative z-10">
+          <div className="pt-28 mt-12 w-full flex flex-col gap-10 relative z-10">
             <div className="scroll-reveal flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="flex flex-col gap-3">
                 <span className="text-blue-500 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs">06 / CREATIVE SHOWCASE</span>
@@ -1155,6 +1192,7 @@ export default function App() {
                 borderRadius={0.05} 
                 font="bold 28px JetBrains Mono, monospace" 
                 scrollSpeed={2.5}
+                autoScrollSpeed={0.3}
               />
             </div>
           </div>

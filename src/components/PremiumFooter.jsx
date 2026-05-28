@@ -1,8 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FaLinkedin, FaGithub, FaInstagram, FaTwitter, FaDribbble, FaBehance } from 'react-icons/fa';
+import { 
+  FaLinkedin, 
+  FaGithub, 
+  FaInstagram, 
+  FaTwitter, 
+  FaDribbble, 
+  FaBehance, 
+  FaTelegramPlane, 
+  FaDiscord, 
+  FaReddit, 
+  FaWhatsapp, 
+  FaPinterest 
+} from 'react-icons/fa';
+import { SiGmail } from 'react-icons/si';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,9 +23,15 @@ const socials = [
   { name: 'GitHub', icon: FaGithub, href: 'https://github.com/Ashwin-876' },
   { name: 'LinkedIn', icon: FaLinkedin, href: 'https://linkedin.com/in/ashwinshaiju' },
   { name: 'Instagram', icon: FaInstagram, href: 'https://instagram.com/ashwin_876_' },
-  { name: 'Twitter', icon: FaTwitter, href: '#' },
+  { name: 'Twitter', icon: FaTwitter, href: 'https://x.com/ashwin_876' },
   { name: 'Dribbble', icon: FaDribbble, href: '#' },
-  { name: 'Behance', icon: FaBehance, href: '#' },
+  { name: 'Behance', icon: FaBehance, href: 'https://www.behance.net/ashwins55' },
+  { name: 'Telegram', icon: FaTelegramPlane, href: 'https://t.me/ashwin_876' },
+  { name: 'Discord', icon: FaDiscord, href: 'https://discord.com/users/ashwin_876' },
+  { name: 'Reddit', icon: FaReddit, href: 'https://www.reddit.com/user/Icy_Writing_4874/' },
+  { name: 'WhatsApp', icon: FaWhatsapp, href: '#' },
+  { name: 'Gmail', icon: SiGmail, href: 'mailto:ashwinshaijus@gmail.com' },
+  { name: 'Pinterest', icon: FaPinterest, href: 'https://in.pinterest.com/ashwinshaijuu/' },
 ];
 
 export default function PremiumFooter() {
@@ -24,7 +43,7 @@ export default function PremiumFooter() {
 
     // Scroll reveal
     const elements = containerRef.current.querySelectorAll('.footer-reveal');
-    gsap.fromTo(elements,
+    const revealTween = gsap.fromTo(elements,
       { y: 60, opacity: 0, filter: 'blur(10px)' },
       {
         y: 0,
@@ -41,7 +60,7 @@ export default function PremiumFooter() {
     );
 
     // Social icons staggered drop-in
-    gsap.fromTo(socialRefs.current,
+    const socialTween = gsap.fromTo(socialRefs.current,
       { y: 80, opacity: 0, scale: 0.8 },
       {
         y: 0,
@@ -58,24 +77,41 @@ export default function PremiumFooter() {
     );
 
     // Magnetic effect for social icons
+    const cleanups = [];
     socialRefs.current.forEach((icon) => {
       if (!icon) return;
       const xTo = gsap.quickTo(icon, "x", { duration: 0.4, ease: "power3.out" });
       const yTo = gsap.quickTo(icon, "y", { duration: 0.4, ease: "power3.out" });
 
-      icon.addEventListener("mousemove", (e) => {
+      const handleMouseMove = (e) => {
         const rect = icon.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
         xTo(x * 0.4);
         yTo(y * 0.4);
-      });
+      };
 
-      icon.addEventListener("mouseleave", () => {
+      const handleMouseLeave = () => {
         xTo(0);
         yTo(0);
+      };
+
+      icon.addEventListener("mousemove", handleMouseMove);
+      icon.addEventListener("mouseleave", handleMouseLeave);
+
+      cleanups.push(() => {
+        icon.removeEventListener("mousemove", handleMouseMove);
+        icon.removeEventListener("mouseleave", handleMouseLeave);
       });
     });
+
+    return () => {
+      revealTween.kill();
+      if (revealTween.scrollTrigger) revealTween.scrollTrigger.kill();
+      socialTween.kill();
+      if (socialTween.scrollTrigger) socialTween.scrollTrigger.kill();
+      cleanups.forEach(c => c());
+    };
   }, []);
 
   return (
@@ -119,7 +155,7 @@ export default function PremiumFooter() {
         </div>
 
         {/* CENTER SECTION - BIG SOCIAL ICONS */}
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 lg:gap-8 mb-16 w-full max-w-5xl">
+        <div className="flex flex-nowrap justify-start lg:justify-center items-center gap-2.5 sm:gap-3.5 md:gap-4.5 lg:gap-5.5 mb-16 w-full max-w-6xl overflow-x-auto lg:overflow-x-visible hide-scrollbar px-6 py-2">
           {socials.map((social, i) => (
             <a
               key={social.name}

@@ -88,20 +88,66 @@
 
 /* Fanning out into a 3x3 Grid Layout when folder is opened */
 .folder.open .paper-1 {
-  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) - 350px)) rotate(-3deg);
 }
 .folder.open .paper-2 {
-  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 350px)) rotate(1deg);
 }
 .folder.open .paper-3 {
-  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) - 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) - 350px)) rotate(4deg);
 }
 .folder.open .paper-4 {
-  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) - 400px), calc(var(--magnet-y, 0) + 350px)) rotate(-2deg);
 }
 .folder.open .paper-5 {
-  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 350px)) rotate(-1deg);
 }
 .folder.open .paper-6 {
-  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) + 350px)) rotate(0deg);
+  transform: translate(calc(var(--magnet-x, 0) + 400px), calc(var(--magnet-y, 0) + 350px)) rotate(3deg);
+}
+
+@media (max-width: 1024px) {
+  .folder.open .paper-1 {
+    transform: translate(calc(var(--magnet-x, 0) - 280px), calc(var(--magnet-y, 0) - 320px)) rotate(-3deg);
+  }
+  .folder.open .paper-2 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 320px)) rotate(1deg);
+  }
+  .folder.open .paper-3 {
+    transform: translate(calc(var(--magnet-x, 0) + 280px), calc(var(--magnet-y, 0) - 320px)) rotate(4deg);
+  }
+  .folder.open .paper-4 {
+    transform: translate(calc(var(--magnet-x, 0) - 280px), calc(var(--magnet-y, 0) + 320px)) rotate(-2deg);
+  }
+  .folder.open .paper-5 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 320px)) rotate(-1deg);
+  }
+  .folder.open .paper-6 {
+    transform: translate(calc(var(--magnet-x, 0) + 280px), calc(var(--magnet-y, 0) + 320px)) rotate(3deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .folder {
+    width: 290px;
+    height: 220px;
+  }
+  .folder.open .paper-1 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 520px)) rotate(-2deg);
+  }
+  .folder.open .paper-2 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 310px)) rotate(2deg);
+  }
+  .folder.open .paper-3 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) - 100px)) rotate(-1deg);
+  }
+  .folder.open .paper-4 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 110px)) rotate(1deg);
+  }
+  .folder.open .paper-5 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 320px)) rotate(-2deg);
+  }
+  .folder.open .paper-6 {
+    transform: translate(calc(var(--magnet-x, 0) + 0px), calc(var(--magnet-y, 0) + 530px)) rotate(3deg);
+  }
 }

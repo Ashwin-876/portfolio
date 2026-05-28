@@ -44,9 +44,14 @@ const Shuffle = ({
 
   useEffect(() => {
     if ('fonts' in document) {
-      if (document.fonts.status === 'loaded') setFontsLoaded(true);
-      else document.fonts.ready.then(() => setFontsLoaded(true));
-    } else setFontsLoaded(true);
+      if (document.fonts.status === 'loaded') {
+        setTimeout(() => setFontsLoaded(true), 0);
+      } else {
+        document.fonts.ready.then(() => setFontsLoaded(true));
+      }
+    } else {
+      setTimeout(() => setFontsLoaded(true), 0);
+    }
   }, []);
 
   const scrollTriggerStart = useMemo(() => {

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './PillNav.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const PillNav = ({
-  logo,
   logoAlt = 'Logo',
   items,
   activeHref,
@@ -27,6 +29,8 @@ const PillNav = ({
   const mobileMenuRef = useRef(null);
   const navItemsRef = useRef(null);
   const logoRef = useRef(null);
+  const containerRef = useRef(null);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const layout = () => {
@@ -115,8 +119,80 @@ const PillNav = ({
       }
     }
 
-    return () => window.removeEventListener('resize', onResize);
+    const currentTls = tlRefs.current;
+    const currentTweens = activeTweenRefs.current;
+    const currentLogoTween = logoTweenRef.current;
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      currentTls.forEach(tl => tl?.kill());
+      currentTweens.forEach(t => t?.kill());
+      currentLogoTween?.kill();
+    };
   }, [items, ease, initialLoadAnimation]);
+
+  // GSAP ScrollTrigger Sticky Scroll Shrink Animation
+  useEffect(() => {
+    const container = containerRef.current;
+    const nav = navRef.current;
+    const logoImg = logoImgRef.current;
+
+    if (!container || !nav) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: 'body',
+        start: 'top top+=10',
+        end: 'top top+=85',
+        scrub: 0.3,
+        invalidateOnRefresh: true
+      }
+    });
+
+    tl.fromTo(container, 
+      { marginTop: '16px' },
+      { marginTop: '6px', ease: 'none' }, 
+      0
+    );
+
+    tl.fromTo(nav, 
+      {
+        paddingTop: '6px',
+        paddingBottom: '6px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        backgroundColor: 'rgba(255, 255, 255, 0.45)',
+        borderColor: 'rgba(255, 255, 255, 0.45)',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.2)'
+      },
+      {
+        paddingTop: '3px',
+        paddingBottom: '3px',
+        paddingLeft: '6px',
+        paddingRight: '6px',
+        backgroundColor: 'rgba(255, 255, 255, 0.72)',
+        borderColor: 'rgba(255, 255, 255, 0.65)',
+        boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.4)',
+        ease: 'none'
+      }, 
+      0
+    );
+
+    if (logoImg) {
+      tl.fromTo(logoImg, 
+        { width: '38px', height: '38px', borderRadius: '9px' },
+        { width: '30px', height: '30px', borderRadius: '7px', ease: 'none' }, 
+        0
+      );
+    }
+
+    return () => {
+      tl.kill();
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
+    };
+  }, []);
 
   const handleEnter = i => {
     // If it's already active, don't play animation
@@ -218,21 +294,30 @@ const PillNav = ({
   };
 
   return (
-    <div className="pill-nav-container w-full max-w-[90rem] mx-auto px-6 sm:px-12 md:px-16 mt-8 flex justify-center z-[1000] fixed top-0 left-1/2 -translate-x-1/2 pointer-events-auto">
-      <nav className={"pill-nav " + className} aria-label="Primary" style={cssVars}>
+    <div 
+      ref={containerRef}
+      className="pill-nav-container w-full max-w-[90rem] mx-auto px-6 sm:px-12 md:px-16 mt-4 flex justify-center z-[1000] fixed top-0 left-1/2 -translate-x-1/2 pointer-events-auto"
+    >
+      <nav 
+        ref={navRef}
+        className={"pill-nav " + className} 
+        aria-label="Primary" 
+        style={cssVars}
+      >
         <a
-          className="pill-logo flex items-center gap-2 group"
+          className="pill-logo flex items-center group"
           href={items?.[0]?.href || '#'}
           aria-label="Home"
           onMouseEnter={handleLogoEnter}
-          ref={el => {
-            logoRef.current = el;
-          }}
+          ref={logoRef}
         >
-          <div className="w-14 h-14 bg-white rounded-[14px] flex items-center justify-center transition-transform duration-500 group-hover:scale-110 shadow-sm overflow-hidden flex-shrink-0">
-            <img src="/logo.jpg" alt="Logo" className="w-full h-full object-contain" />
+          <div 
+            ref={logoImgRef}
+            className="pill-logo-img shadow-sm"
+          >
+            <img src="/logo.jpg" alt={logoAlt} className="w-full h-full object-contain" />
           </div>
-          <span className="font-bold text-black tracking-[0.2em] text-sm uppercase group-hover:text-cyan-600 transition-colors duration-300 ml-2 mr-6 hidden md:block">
+          <span className="pill-logo-text hidden md:block">
             Ashwin S
           </span>
         </a>
@@ -290,7 +375,7 @@ const PillNav = ({
                 <a
                   href={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={toggleMobileMenu}
                 >
                   {item.label}
                 </a>

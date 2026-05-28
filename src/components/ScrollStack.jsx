@@ -268,7 +268,7 @@ const ScrollStack = ({
       }
     });
 
-    cards.forEach((card, i) => {
+    cards.forEach((card) => {
       card.style.willChange = 'transform, filter';
       card.style.transformOrigin = 'top center';
       card.style.backfaceVisibility = 'hidden';
