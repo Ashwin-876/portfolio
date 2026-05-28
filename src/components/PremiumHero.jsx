@@ -167,54 +167,90 @@ export default function PremiumHero() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#fafafa] overflow-hidden flex items-center justify-center select-none"
+      className="relative w-full h-screen bg-[#fafafa] overflow-hidden flex flex-col lg:flex-row select-none"
       style={{ cursor: 'none' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
 
-      {/* Ambient glows */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute w-[80vw] h-[80vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/15 mix-blend-multiply blur-[130px] animate-pulse-slow" />
-        <div className="absolute w-[50vw] h-[50vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/15 mix-blend-multiply blur-[110px] animate-pulse-slow" style={{ animationDelay: '3s' }} />
+      {/* Left Column: Clean minimalist text & actions */}
+      <div className="relative lg:w-1/2 w-full h-full flex flex-col justify-center px-8 sm:px-16 md:px-24 bg-white z-20">
+        {/* Subtle grid and glows */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="absolute w-[250px] h-[250px] top-[15%] left-[5%] rounded-full bg-blue-300/10 blur-[80px]" />
+          <div className="absolute w-[300px] h-[300px] bottom-[15%] right-[5%] rounded-full bg-cyan-200/10 blur-[100px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:30px_30px]" />
+        </div>
+
+        {/* Content elements */}
+        <div className="relative z-10 flex flex-col gap-4 pointer-events-none max-w-lg">
+          <span ref={eyebrowRef} className="text-blue-600 font-mono font-bold tracking-[0.25em] text-[10px] md:text-xs opacity-0 bg-blue-500/5 px-4 py-1.5 rounded-full border border-blue-500/10 w-fit">
+            ASHWIN S PORTFOLIO
+          </span>
+
+          <h1 ref={headingRef} className="text-black text-3xl sm:text-4xl md:text-[2.2rem] font-light tracking-tight leading-[1.3] opacity-0 mt-2">
+            Building modern <br /> digital experiences with
+            <span className="block font-semibold border-b-2 border-blue-500/80 pr-1 select-all text-blue-600 mt-2 h-10 w-fit">{currentText}</span>
+          </h1>
+
+          <p ref={subheadingRef} className="text-neutral-500 font-light text-sm max-w-md mt-4 leading-relaxed opacity-0">
+            AI Engineer & Full Stack Developer passionate about creating immersive digital experiences, AI-powered applications, and premium futuristic interfaces.
+          </p>
+
+          <div ref={buttonsRef} className="flex items-center gap-6 mt-6 opacity-0 pointer-events-auto">
+            <a href="#projects" className="bg-black hover:bg-neutral-800 text-white text-[10px] md:text-xs tracking-wider uppercase px-7 py-3.5 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] cursor-pointer">
+              VIEW PROJECTS
+            </a>
+            <a href="#contact" className="flex items-center gap-2 text-neutral-500 hover:text-black font-bold text-[10px] md:text-xs tracking-wider uppercase transition-colors group cursor-pointer">
+              CONTACT ME
+              <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* ── Image layers ───────────────────────────────────────── */}
-      <div
-        ref={imageContainerRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-10"
-        style={{ transform: 'translateY(6vh) scale(0.93)' }}
-      >
-        <div className="absolute w-[70%] h-[80%] top-[10%] left-[15%] bg-black/5 rounded-[4rem] blur-[40px] z-0" />
+      {/* Right Column: Interactive TrueFocus Image */}
+      <div className="relative lg:w-1/2 w-full h-full bg-[#f3f4f6] overflow-hidden z-10 flex items-center justify-center">
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/10 blur-[100px]" />
+        </div>
 
-        {/* BLURRED layer — always visible as the background */}
-        <img
-          src={image1}
-          alt="Ashwin S blurred"
-          className="absolute inset-0 w-full h-full object-cover object-center z-10"
-          style={{
-            filter: 'blur(22px) brightness(0.96)',
-            transform: 'scale(1.05)',
-          }}
-        />
-
-        {/* SHARP layer — wrapped in a div for robust cross-browser clip-path support */}
+        {/* Image layers */}
         <div
-          ref={topImageRef}
-          className="absolute inset-0 w-full h-full z-20 pointer-events-none"
-          style={{
-            opacity: isHovering ? 1 : 0,
-            transition: 'opacity 0.25s ease',
-            clipPath: 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)', // Hidden by default until hover
-            WebkitClipPath: 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)',
-          }}
+          ref={imageContainerRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-10"
         >
+          {/* BLURRED layer */}
           <img
             src={image1}
-            alt="Ashwin S"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            style={{ transform: 'scale(1.05)' }}
+            alt="Ashwin S blurred"
+            className="absolute inset-0 w-full h-full object-cover object-center z-10"
+            style={{
+              filter: 'blur(20px) brightness(0.96)',
+              transform: 'scale(1.02)',
+            }}
           />
+
+          {/* SHARP layer */}
+          <div
+            ref={topImageRef}
+            className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+            style={{
+              opacity: isHovering ? 1 : 0,
+              transition: 'opacity 0.25s ease',
+              clipPath: 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)',
+              WebkitClipPath: 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)',
+            }}
+          >
+            <img
+              src={image1}
+              alt="Ashwin S"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ transform: 'scale(1.02)' }}
+            />
+          </div>
         </div>
       </div>
 
@@ -255,36 +291,6 @@ export default function PremiumHero() {
           boxShadow: '0 0 10px rgba(59,130,246,1), 0 0 20px rgba(59,130,246,0.6)',
           transform: 'translate(-50%,-50%)',
         }} />
-      </div>
-
-      {/* ── Content overlay ─────────────────────────────────────── */}
-      <div className="absolute bottom-16 md:bottom-24 left-6 sm:left-12 md:left-20 z-30 flex flex-col gap-3 pointer-events-none max-w-[90%] md:max-w-2xl">
-        <span ref={eyebrowRef} className="text-neutral-400 font-bold uppercase tracking-[0.25em] text-[10px] md:text-xs opacity-0">
-          ASHWIN S PORTFOLIO
-        </span>
-
-        <h1 ref={headingRef} className="text-black text-2xl sm:text-4xl md:text-5xl lg:text-[2.2rem] font-light tracking-tight leading-[1.15] opacity-0">
-          Building modern digital experiences with{' '}
-          <br className="hidden sm:inline" />
-          <span className="font-normal border-b-2 border-blue-500/80 pr-1 select-all">{currentText}</span>
-          <span className="animate-ping font-extralight text-blue-500 ml-1">|</span>
-        </h1>
-
-        <p ref={subheadingRef} className="text-neutral-600 font-light text-xs sm:text-sm max-w-lg mt-2 leading-relaxed opacity-0">
-          AI Engineer & Full Stack Developer passionate about creating immersive digital experiences, AI-powered applications, and premium futuristic interfaces.
-        </p>
-
-        <div ref={buttonsRef} className="flex items-center gap-6 mt-5 opacity-0 pointer-events-auto">
-          <a href="#projects" className="bg-black hover:bg-neutral-800 text-white text-[10px] md:text-xs tracking-wider uppercase px-7 py-3.5 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] cursor-pointer">
-            VIEW PROJECTS
-          </a>
-          <a href="#contact" className="flex items-center gap-2 text-neutral-500 hover:text-black font-bold text-[10px] md:text-xs tracking-wider uppercase transition-colors group cursor-pointer">
-            CONTACT ME
-            <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
       </div>
 
       {/* Scroll indicator */}
